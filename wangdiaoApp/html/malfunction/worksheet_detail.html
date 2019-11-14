@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>工单处理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/malfunction/worksheet_detail.css"/>
+</head>
+<body style="background-color: #f5f5f5 !important;position: relative">
+<header id="header" class="aui-bar aui-bar-nav headerMarginTop"
+        style="background-color: #e9e9e9; color: #535353;position: fixed;font-weight: 700">
+    <div class="aui-pull-left aui-btn" onclick="common.closeAndReloadAppointPage('reload_worksheet_manage')">
+        <span class="aui-iconfont aui-icon-left" style="color: #535353 !important;font-weight: 800"></span>返回
+    </div>
+    <div class="aui-title">工单详情</div>
+    <div class="aui-pull-right" style="margin-top:0.6rem;margin-right:0.3rem;width: 11%;height:11%;">
+        <img src="../../image/three_lines.png" onclick="showMenu()">
+    </div>
+    <div class="activityMenu" id="activityMenu" style="display:none;">
+    </div>
+</header>
+<div id="baseInfo" style="position: relative;" class="bodyMarginTop">
+    <div class="redLine"></div>
+    <div id="orangeRectangleInfo" class="orangeRectangleInfo" onclick="pageDispose()">
+    </div>
+    <div class="tab" id="tab" style="margin-top: 0.3rem">
+        <div class="tab-item" id="tab-worksheet-info" data-to="worksheet-info" onclick="changeTab(this);">工单信息</div>
+        <div class="tab-item" id="tab-malfunction-info" data-to="malfunction-info" onclick="changeTab(this);">故障信息</div>
+        <div class="tab-item tab-active" id="tab-flow-info" data-to="flow-info" onclick="changeTab(this);">流转信息</div>
+    </div>
+    <div id="workSheetDetail" style="position:relative;background-color: white;margin-bottom: 2.8rem">
+    </div>
+</div>
+
+<footer class="aui-bar aui-bar-tab" id="footer" style="background-color: #e7e7e7; color: #292929">
+    <img style="width:150px;height:150px;position:absolute;right:0;bottom:2.5rem;"
+         src="../../image/liantong_dark_fringe.png">
+    <div class="redLine"></div>
+    <div style="background-color: white">
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage('win_worksheet_manage')">
+            <img class="aui-iconfont" style="margin-left: 40%" src="../../image/gongdanchuli_orange_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem;color: #ff6600">工单处理</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage(null)">
+            <img class="aui-iconfont" style="margin-left: 38%" src="../../image/gailanshitu_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem">概览视图</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage(null)">
+            <img class="aui-iconfont" style="margin-left: 37.5%" src="../../image/peizhiguanli_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem">配置管理</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage('person_center')">
+            <img class="aui-iconfont" style="margin-left: 39%" src="../../image/wode_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem">我的</div>
+        </div>
+    </div>
+</footer>
+</body>
+<script id="base-info" type="text/template">
+    <div style="padding-top: 0.2rem;padding-bottom: 0.2rem">
+        <div class="baseInfoTitle">工单编号：</div>
+        <div style="display: inline-block;font-size: 0.7rem">{{=it.wsNum}}</div>
+        <div>
+            <div class="baseInfoTitle">工单主题：</div>
+            <div class="baseInfoName">{{=it.wsTitle}}</div>
+        </div>
+    </div>
+</script>
+<script id="worksheet-info" type="text/template">
+    <div style="margin-top: 0.5rem">
+        <div class="infoLeft">工单流水号</div>
+        <div class="infoRight">{{=it.wsNum||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">工单主题</div>
+        <div class="infoRight">{{=it.wsTitle||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">工单状态</div>
+        <div class="infoRight">
+            {{=it.orderState}}
+        </div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单人</div>
+        <div class="infoRight">{{=it.sendUserId||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单部门</div>
+        <div class="infoRight">{{=it.sendDeptId||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单人联系方式</div>
+        <div class="infoRight">{{=it.phoneNumber||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单时间</div>
+        <div class="infoRight">{{=it.wsCreateDate||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理人</div>
+        <div class="infoRight">{{=it.dealManFK||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理部门</div>
+        <div class="infoRight">{{=it.dealDeptFK||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理人联系方式</div>
+        <div class="infoRight">{{=it.dealPhoneFK||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理时间</div>
+        <div class="infoRight">{{=it.dealTimeFK||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理历时</div>
+        <div class="infoRight">
+            {{=it.clls||''}}
+        </div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">挂起历时</div>
+        <div class="infoRight">{{=it.suspendLast||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理时限剩余时间</div>
+        <div class="infoRight">
+            {{=it.clss||''}}
+        </div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">工单净历时</div>
+        <div class="infoRight">{{=it.sheetLast||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+</script>
+<script id="malfunction-info" type="text/template">
+    <div style="margin-top: 0.5rem">
+        <div class="infoLeft">故障专业</div>
+        <div class="infoRight">{{=it.dmPro||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">故障处理响应级别</div>
+        <div class="infoRight">{{=it.dmLevel||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">故障受理时限</div>
+        <div class="infoRight">{{=it.dmRrpLimt||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">故障处理时限</div>
+        <div class="infoRight">{{=it.dmDealLimit||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">故障发生时间</div>
+        <div class="infoRight">{{=it.dmHapTime||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">线路级别</div>
+        <div class="infoRight">{{=it.lineLevel||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">投诉联系电话</div>
+        <div class="infoRight">{{=it.disclosurePhone||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警省份</div>
+        <div class="infoRight">{{=it.alarmProvince||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">派单方式</div>
+        <div class="infoRight">{{=it.createType||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警地市</div>
+        <div class="infoRight">{{=it.alarmRegion||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警区县</div>
+        <div class="infoRight"></div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">故障发现方式</div>
+        <div class="infoRight">{{=it.dmFindType||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">预处理描述</div>
+        <div class="infoRight">{{=it.dmDetails||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警描述</div>
+        <div class="infoRight">{{=it.alarmDetail||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">投诉联系人</div>
+        <div class="infoRight">{{=it.complainantUser||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">网管告警流水号</div>
+        <div class="infoRight">{{=it.reservrId||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">网管告警ID</div>
+        <div class="infoRight">{{=it.alarmstaId||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">原始告警ID</div>
+        <div class="infoRight">{{=it.orialarmId||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警逻辑分类</div>
+        <div class="infoRight">{{=it.alarmtype||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警逻辑子类</div>
+        <div class="infoRight">{{=it.alarmsubtype||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警定位</div>
+        <div class="infoRight">{{=it.alarmlocation||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">告警级别</div>
+        <div class="infoRight">{{=it.alarmLevel||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">故障清除时间</div>
+        <div class="infoRight">{{=it.alarmcleantime||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+
+    <div>
+        <div class="infoLeft">网元ID</div>
+        <div class="infoRight">{{=it.neid||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">网元名称</div>
+        <div class="infoRight">{{=it.nename||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">设备ID</div>
+        <div class="infoRight">{{=it.equipmentid||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">设备名称</div>
+        <div class="infoRight">{{=it.equipmentname||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">设备厂家</div>
+        <div class="infoRight">{{=it.alarmvendor||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">设备型号</div>
+        <div class="infoRight">{{=it.equiptype||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+</script>
+<script id="flow-info" type="text/template">
+    {{?it}}
+    {{~it:info:index}}
+    <div class="flowInfo">
+        {{?index==(it.length-1)}}
+        <div class="flowInfoLeft">
+            <div class="orangeCircle"></div>
+            <div class="line" style="bottom: 0.5rem"></div>
+        </div>
+        <div class="flowInfoRight" style="margin-bottom: 0.5rem">
+        {{??}}
+        <div class="flowInfoLeft">
+            <div class="orangeCircle"></div>
+            <div class="line"></div>
+        </div>
+        <div class="flowInfoRight">
+        {{?}}
+            <div>
+                <div style="font-weight: 700">{{=info.taskType||''}}</div>
+            </div>
+            <div>
+                <div>{{=info.column5||''}}</div>
+            </div>
+
+            <div style="color: #9a9a9a">
+                <div>{{=info.disposeMan||''}}
+                    {{?info.disposeManDep}}
+                    ({{=info.disposeManDep||''}})
+                    {{?}}
+                </div>
+            </div>
+            <div style="color: #9a9a9a">
+                <div>处理人联系方式：</div>
+            </div>
+            <div style="font-size: 0.7rem;color: #9a9a9a">
+                <div>{{=info.dealMan||''}}
+                    {{?info.dealDept}}
+                    ({{=info.dealDept||''}})
+                    {{?}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{~}}
+    {{?}}
+</script>
+<script id="menu-info" type="text/template">
+    {{?it&&it.length>0}}
+    <div class="triangle"></div>
+    <div class="blackBox">
+        {{~it:info:index}}
+        <div onclick="openProcessWin('{{=info.pageUrl}}')">
+            <div class="menuIconDiv">
+                <img src="../../image/{{=info.imgUrl}}" class="menuIcon">
+            </div>
+            <div class="menuName">{{=info.key}}</div>
+            {{?index==(it.length-1)}}
+            <div class="menuLine" style="margin-bottom: 0.5rem"></div>
+            {{??}}
+            <div class="menuLine"></div>
+            {{?}}
+        </div>
+        {{~}}
+    </div>
+    {{?}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/malfunction/worksheet_detail.js"></script>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>确认结单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/calendar/jeDate-test.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/calendar/jedate.css"/>
+</head>
+<style>
+    .aui-bar-nav {
+        background-color: #e10010;
+    }
+
+    .aui-icon-left {
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+    body{
+        font-size: 0.8rem;
+    }
+
+</style>
+<body>
+<div class="bodyContainer">
+    <header class="aui-bar aui-bar-nav headerMarginTop" style="position: fixed;">
+        <div class="aui-pull-left aui-btn">
+            <span class="aui-iconfont aui-icon-left"></span>
+            <span class="aui-Font" onclick="api.closeWin()">返回</span>
+        </div>
+        <div class="aui-title">确认结单</div>
+    </header>
+    <div style="margin-top: 3rem">
+        <div id="workSheet_area" class="aui-padded-l-15">
+            <div class="workSheet_Choose_div" style="height:3.8rem" onclick="getWorkSheetDetails()">
+                <div class="workSheet_Choose_div_sp" style="height:3.8rem">
+                    <div class="inline-block" style="margin-top: 1rem">
+                        <span class="redStar">*</span>
+                        返单对象：
+                    </div>
+                    <div class="inline-block" style="width: 70%;margin-top: 1rem" id="fddx-div">
+                        <input id="fddx-input" type="text" value="" tabindex="0" readonly placeholder="请选择">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--是否本部门故障-->
+            <div class="workSheet_Choose_div infoMarginTop">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    是否为本部门故障：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="bbmgz-sel" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--故障区域-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    故障区域：
+                    <div class="inline-block" style="width:50%;">
+                        <input id="gzqy_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--故障原因关键字-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    故障原因关键字：
+                    <div class="inline-block" style="width:50%;">
+                        <input id="gzgjz_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--故障原因-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    故障原因：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="gzyy_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--是否影响业务-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    是否影响业务：
+                    <div class="inline-block">
+                        <input id="yxyw-sel" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--派发时间-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    派发时间：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="jdsj_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--故障历时-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    故障历时：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="gzls_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--故障专业-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    故障专业：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="gzzy_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--影响范围-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    影响范围：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="yxfw_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--返单时间-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    返单时间：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="fdsj_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--处理总历时-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    处理总历时：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="clzls_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--挂起历时-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    挂起历时：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="gqls_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--故障开启时间-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    故障开启时间：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="gzkqsj_input" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--业务恢复时间      -->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    业务恢复时间：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="ywhfsj_input" type="text" tabindex="0" readonly placeholder="请选择时间">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--处理是否超时-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="redStar">*</span>
+                    处理是否超时：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="clsfcs_sel" type="text" value="" tabindex="0" readonly placeholder="">
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+
+            <!--超时原因-->
+            <div>
+                <div class="workSheet_Reasons_div aui-hide" id="csyy_div">
+                    <div>
+                        <span class="whiteStar">*</span>
+                        超时原因：
+                    </div>
+                    <div>
+                        <textarea placeholder="请输入" readonly id="csyy_area"></textarea>
+                    </div>
+                </div>
+                <!--处理过程描述-->
+                <div class="infoMarginTop">
+                    <div>
+                        <span class="whiteStar">*</span>
+                        处理过程描述：
+                    </div>
+                    <div>
+                        <textarea placeholder="" readonly id="clgcms_area"></textarea>
+                    </div>
+                </div>
+                <!--结单备注-->
+                <div class="infoMarginTop">
+                    <div>
+                        <span class="whiteStar">*</span>
+                        结单备注：
+                    </div>
+                    <div>
+                        <textarea placeholder="" id="jdbz_area"></textarea>
+                    </div>
+                </div>
+                <!--路由信息-->
+                <div class="workSheet_Choose_div aui-hide" id="toute_Info">
+                    <div class="workSheet_Choose_div_sp">
+                        <span class="whiteStar">*</span>
+                        路由信息：
+                        <div class="inline-block" style="width: 50%;">
+                            <input id="lyxx_input" type="text" readonly value="" tabindex="0" placeholder="">
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+                <div style="text-align: center;" class="aui-margin-t-15 aui-margin-b-15">
+                    <div onclick="submitData()" class="aui-btn">提交</div>
+                    <div onclick="openReturnReprocess()" class="aui-btn aui-margin-l-10">退回并重新处理</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="confirm_finsh_ws" type="text/template">
+    <div id="selectDiv" data-name="{{=it.objectName}}" data-time="{{=''}}" style="background-color: red">
+        <span>反馈人:{{=it.objectName}}</span></br>
+        <span>反馈时间:{{=it.objectTime}}</span>
+    </div>
+</script>
+<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/calendar.js"></script>
+<script type="text/javascript" src="../../script/malfunction/confirmFinishWorksheet.js"></script>
+</body>
+</html>

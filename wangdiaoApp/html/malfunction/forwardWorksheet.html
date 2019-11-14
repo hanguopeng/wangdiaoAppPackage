@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>转派</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <style>
+        .aui-bar-nav{
+            background-color: #e10010;
+        }
+        .aui-icon-left{
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        select {
+
+            text-align: left;
+
+            text-align-last: left;
+
+        }
+
+    </style>
+</head>
+<body >
+<div class="bodyContainer bodyPosition">
+    <header class="aui-bar aui-bar-nav headerMarginTop">
+        <div class="aui-pull-left aui-btn">
+            <span class="aui-iconfont aui-icon-left"></span><span class="aui-Font" onclick="api.closeWin()">返回</span>
+        </div>
+        <div class="aui-title">转派</div>
+        <div class="aui-pull-right header_confirm">
+            <span class="aui_Font" onclick="save()">确定</span>
+        </div>
+    </header>
+
+    <div id="workSheet_area" class="aui-padded-l-15">
+            <!--转派类型-->
+            <div class="workSheet_Choose_div">
+                <div  class="workSheet_Choose_div_sp">
+                    <div class="inline-block">
+                        <span class="redStar">*</span>
+                        转派类型：
+                    </div>
+                    <div class="inline-block" style="width:12rem">
+                        <select id="disposeWay">
+                        </select>
+                        <div  class="inline-block lianTong-icon-down" >
+                            <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--转派对象-->
+            <div class="workSheet_Choose_div">
+                <div  class="workSheet_Choose_div_sp" style="padding-top: 0.55rem">
+                    <div class="inline-block" >
+                        <span class="redStar">*</span>
+                        转派对象：
+                    </div>
+                    <div class="inline-block" style="width:12rem" onclick="openWin('zpdx')">
+                        <input id="zpdx" name="" placeholder="请选择">
+                        <div  class="inline-block lianTong-icon-down" >
+                            <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--抄送对象-->
+            <div class="workSheet_Choose_div">
+                <div  class="workSheet_Choose_div_sp" style="padding-top: 0.55rem">
+                    <div class="inline-block"  >
+                        <span class="whiteStar">*</span>
+                        抄送对象：
+                    </div>
+                    <div class="inline-block"  style="width:12rem" onclick="openWin('csdx')">
+                        <input id="csdx" name="" placeholder="请选择">
+                        <div  class="inline-block lianTong-icon-down" >
+                            <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--转派原因-->
+            <div class="infoMarginTop">
+                <div>
+                    <span class="whiteStar">*</span>
+                    转派原因：
+                </div>
+                <div>
+                    <textarea  placeholder="请输入" id="remark"></textarea>
+                </div>
+            </div>
+        </div>
+</div>
+<script id="type-selector" type="text/template">
+    {{?it&&it.nameList}}
+        {{ for(var i=0;i<it.nameList.length;i++){
+            if(!common.isEmpty(it.nameList[i])){
+        }}
+        <option value="{{=it.idList[i]}}">{{=it.nameList[i]}}</option>
+        {{
+            }
+        }
+        }}
+    {{?}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/malfunction/forwardWorksheet.js"></script>
+</body>
+</html>

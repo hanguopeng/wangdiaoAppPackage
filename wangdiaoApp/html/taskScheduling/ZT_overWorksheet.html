@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>返单</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/calendar/jeDate-test.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/calendar/jedate.css"/>
+</head>
+    <style>
+        .aui-bar-nav{
+            background-color: #e10010;
+        }
+        .aui-icon-left{
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        body{
+            font-size: 0.8rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="bodyContainer bodyPosition">
+    <header class="aui-bar aui-bar-nav headerMarginTop" style="position: fixed;">
+        <div class="aui-pull-left aui-btn">
+            <span class="aui-iconfont aui-icon-left"></span><span class="aui-Font" onclick="api.closeWin()">返回</span>
+        </div>
+        <div class="aui-title">返单</div>
+        <div class="aui-pull-right header_confirm">
+            <span class="aui_Font" onclick="save()">确定</span>
+        </div>
+    </header>
+
+    <div style="margin-top: 3rem">
+        <div id="workSheet_area" class="aui-padded-l-15">
+            <!--问题原因类型-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <div class="inline-block">
+                        <div class="inline-block">
+                            <span class="redStar">*</span>
+                            问题原因类型：
+                        </div>
+                        <div class="inline-block" style="width:10rem ">
+                            <select id="reasonType" onchange="changePage()">
+                                <option value='1'>建设类</option>
+                                <option value="2">维护类</option>
+                                <option value="3">优化类</option>
+                            </select>
+                            <div  class="inline-block lianTong-icon-down" >
+                                <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--任务单编号-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="whiteStar" name="star">*</span>
+                    任务单编号：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="taskCode" type="text" value="" tabindex="0" readonly>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--责任人姓名-->
+            <div id="userName" class="workSheet_Choose_div aui-hide">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="whiteStar" name="star">*</span>
+                    责任人姓名：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="sendUserName" type="text" value="" tabindex="0" readonly>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--责任人工号-->
+            <div id="userId" class="workSheet_Choose_div aui-hide">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="whiteStar" name="star">*</span>
+                    责任人工号：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="sendUserId" type="text" value="" tabindex="0" readonly>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--责任人所属部门-->
+            <div id="deptName" class="workSheet_Choose_div aui-hide">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="whiteStar" name="star">*</span>
+                    责任人所属部门：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="sendDeptName" type="text" value="" tabindex="0" readonly>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--责任人电话-->
+            <div id="mobile" class="workSheet_Choose_div aui-hide">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="whiteStar" name="star">*</span>
+                    责任人电话：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="phoneNumber" type="text" value="" tabindex="0" readonly>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--回单时间-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <span class="whiteStar" name="star">*</span>
+                    回单时间：
+                    <div class="inline-block" style="width: 50%;">
+                        <input id="feedBackTime" type="text" value="" tabindex="0" readonly>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--备注-->
+            <div class="infoMarginTop">
+                <div>
+                    <span class="whiteStar">*</span>
+                    备注：
+                </div>
+                <div>
+                    <textarea placeholder="请输入" id="remark"></textarea>
+                </div>
+            </div>
+            <!--建设类-->
+            <div id="construction" class="aui-show aui-hide">
+            <!--问题原因判定-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <div class="inline-block">
+                        <div class="inline-block">
+                            <span class="redStar">*</span>
+                            问题原因判定：
+                        </div>
+                        <div class="inline-block" style="width:10rem ">
+                            <select id="construction-judge">-->
+                                <option value="11">无覆盖</option>
+                                <option value="12">弱覆盖</option>
+                                <option value="13">扩容</option>
+                                </select>
+                                <div  class="inline-block lianTong-icon-down" >
+                                    <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+                <!--是否有解决方案-->
+                <div class="workSheet_Choose_div">
+                    <div class="workSheet_Choose_div_sp">
+                        <div class="inline-block">
+                            <div class="inline-block">
+                                <span class="redStar">*</span>
+                                是否有解决方案：
+                            </div>
+                            <div class="inline-block" style="width:9rem ">
+                                <select id="construction-beSolution">
+                                    <option value="是">是</option>
+                                    <option value="否">否</option>
+                                </select>
+                                <div  class="inline-block lianTong-icon-down" >
+                                    <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+                <div class="infoMarginTop">
+                    <div>
+                        <span class="redStar">*</span>
+                        文字描述：
+                    </div>
+                    <div>
+                        <textarea placeholder="请输入" id="construction-textDescription"></textarea>
+                    </div>
+                </div>
+                <!--预计解决时间-->
+                <div class="workSheet_Choose_div" style="margin-bottom: 0.5rem">
+                    <div class="workSheet_Choose_div_sp">
+                        <span class="redStar" name="star">*</span>
+                        预计解决时间：
+                        <div class="inline-block" style="width: 50%;">
+                            <input id="construction-expTime" type="text" value="" placeholder="请输入"  tabindex="0" >
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+            </div>
+            <!--维护类-->
+            <div id="maintain" class="aui-hide">
+                <div class="workSheet_Choose_div">
+                    <div class="workSheet_Choose_div_sp">
+                        <div class="inline-block">
+                            <div class="inline-block">
+                                <span class="redStar">*</span>
+                                问题原因判定：
+                            </div>
+                            <div class="inline-block" style="width:10rem ">
+                                <select id="maintain-judge-one" class="aui-hide">
+                                    <option value="21">故障</option>
+                                    <option value="22">搬迁</option>
+                                    <option value="99">其他</option>
+                                </select>
+                                <select id="maintain-judge-two" class="aui-hide">
+                                    <option value="23">OLT-中继拥塞</option>
+                                    <option value="24">设备故障-硬件类</option>
+                                    <option value="25">设备故障-尾纤类</option>
+                                    <option value="26">设备故障-电源类</option>
+                                    <option value="27">设备故障-环境类</option>
+                                    <option value="28">设备故障-光缆类</option>
+                                    <option value="29">用户故障</option>
+                                    <option value="2A">未知原因</option>
+                                    <option value="99">其他</option>
+                                </select>
+                                <div  class="inline-block lianTong-icon-down" >
+                                    <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+                <!--故障是否修复-->
+                <div class="workSheet_Choose_div">
+                    <div class="workSheet_Choose_div_sp">
+                        <div class="inline-block">
+                            <div class="inline-block">
+                                <span class="redStar">*</span>
+                                故障是否修复：
+                            </div>
+                            <div class="inline-block" style="width:10rem ">
+                                <select id="maintain-isexclude">
+                                    <option value="是">是</option>
+                                    <option value="否">否</option>
+                                </select>
+                                <div  class="inline-block lianTong-icon-down" >
+                                    <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+                <!--文字描述-->
+                <div class="infoMarginTop">
+                    <div>
+                        <span class="redStar">*</span>
+                        文字描述：
+                    </div>
+                    <div>
+                        <textarea placeholder="请输入" id="maintain-textDescription"></textarea>
+                    </div>
+                </div>
+                <!--预计解决时间-->
+                <div class="workSheet_Choose_div" style="margin-bottom: 0.5rem">
+                    <div class="workSheet_Choose_div_sp">
+                        <span class="redStar" name="star">*</span>
+                        预计解决时间：
+                        <div class="inline-block" style="width: 50%;">
+                            <input id="maintain-expTime" type="text" value="" tabindex="0" placeholder="请输入" >
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+            </div>
+            <!--优化类-->
+            <div id="optimize" class="aui-hide">
+            <!--问题原因判定-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <div class="inline-block">
+                        <div class="inline-block">
+                            <span class="redStar">*</span>
+                            问题原因判定：
+                        </div>
+                        <div class="inline-block" style="width:10rem ">
+                            <select id="optimize-judge">
+                                <option value="31">参数调整</option>
+                                <option value="32">天馈调整</option>
+                                <option value="33">外部干扰</option>
+                                <option value="99">其他</option>
+                            </select>
+                            <div  class="inline-block lianTong-icon-down" >
+                                <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--是否有解决方案-->
+                <div class="workSheet_Choose_div">
+                    <div class="workSheet_Choose_div_sp">
+                        <div class="inline-block">
+                            <div class="inline-block">
+                                <span class="redStar">*</span>
+                                是否有解决方案：
+                            </div>
+                            <div class="inline-block" style="width: 9rem">
+                                <select id="optimize-beSolution">
+                                    <option value="是">是</option>
+                                    <option value="否">否</option>
+                                </select>
+                                <div class="inline-block lianTong-icon-down">
+                                    <span class="aui-iconfont aui-icon-down rams-float-right"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+                <!--文字描述-->
+                <div class="infoMarginTop">
+                    <div>
+                        <span class="redStar">*</span>
+                        文字描述：
+                    </div>
+                    <div>
+                        <textarea placeholder="请输入" id="optimize-textDescription"></textarea>
+                    </div>
+                </div>
+                <!--预计解决时间-->
+                <div class="workSheet_Choose_div" style="margin-bottom: 0.5rem">
+                    <div class="workSheet_Choose_div_sp">
+                        <span class="redStar" name="star">*</span>
+                        预计解决时间：
+                        <div class="inline-block" style="width: 50%;">
+                            <input id="optimize-expTime" type="text" value="" tabindex="0" placeholder="请输入">
+                        </div>
+                    </div>
+                    <div class="greyLine96"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/calendar.js"></script>
+<script type="text/javascript" src="../../script/taskScheduling/ZT_overWorksheet.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>挂起审核</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <style>
+        .aui-bar-nav{
+            background-color: #e10010;
+        }
+        .aui-icon-left{
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        select {
+
+            text-align: left;
+
+            text-align-last: left;
+
+        }
+        .agree-btn{
+            height: 1.5rem;
+            line-height: 1.5rem;
+            color: white;
+            margin-top: 0.2rem;
+            margin-bottom: 0.4rem;
+            margin-left: 4%;
+            width:20%;
+            background: #c7c7c7;
+        }
+
+    </style>
+</head>
+<body >
+<div class="bodyContainer bodyPosition">
+    <header class="aui-bar aui-bar-nav headerMarginTop">
+        <div class="aui-pull-left aui-btn">
+            <span class="aui-iconfont aui-icon-left"></span>
+            <span class="aui-Font" onclick="api.closeWin()">返回</span>
+        </div>
+        <div class="aui-title">挂起审核</div>
+    </header>
+    <div id="workSheet_area" class="aui-padded-l-15">
+        <div class="workSheet_Choose_div">
+            <div  class="workSheet_Choose_div_sp">
+                <div class="inline-block" style="width: 37%;">
+                    <span class="redStar">*</span>
+                    挂起申请对象：
+                </div>
+                <div class="inline-block" style="width: 43%;">
+                    <select  id="suspendAuditModel" onchange="loadingTypeAndReason()">
+                        <option value='' disabled selected style='display:none;'>请选择</option>
+                    </select>
+                </div>
+                <div class="inline-block lianTong-icon-down" >
+                    <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                </div>
+            </div>
+            <div class="greyLine96"></div>
+        </div>
+        <!--挂起类型-->
+        <div class="workSheet_Choose_div">
+            <div  class="workSheet_Choose_div_sp" style="margin-top: 0.55rem">
+                <div class="inline-block" style="width: 30%;">
+                    <span class="redStar">*</span>
+                    挂起类型：
+                </div>
+                <div class="inline-block" style="width: 50%;">
+                    <input id="suspendType" readonly>
+                </div>
+            </div>
+            <div class="greyLine96" style="margin-top: -0.2rem"></div>
+        </div>
+        <!--挂起原因-->
+        <div>
+            <div>
+                <span class="whiteStar">*</span>
+                挂起原因：
+            </div>
+            <div>
+                <textarea style="height: 200px" id="suspendReason" readonly></textarea>
+            </div>
+        </div>
+        <!--批复意见-->
+        <div style="margin-top: 0.5rem">
+            <div>
+                <span class="whiteStar">*</span>
+                批复意见：
+            </div>
+            <div>
+                <textarea style="height: 200px" placeholder="请输入" id="pfyj"></textarea>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center;margin-top: 0.8rem">
+            <button onclick="save(this)" class="agree-btn" data-to="1" value="1" >同意</button>
+            <button onclick="save(this)" class="agree-btn" data-to="2" value="2" >不同意</button>
+    </div>
+</div>
+<script id="suspend-audit-model" type="text/template">
+    <option value=""  disabled selected style="font-size: 0.5rem">请选择</option>
+    {{?it&&it.list.length>0}}
+    {{ for(var i=0;i<it.list.length;i++){
+    }}
+    <option value="{{=it.list[i][5]||''}}" style="font-size: 0.5rem" >
+        反馈人：{{=it.list[i][1]||''}}
+        反馈部门：{{=it.list[i][3]||''}}
+        反馈时间：{{=it.list[i][4]||''}}
+    </option>
+    {{
+    }
+    }}
+    {{?}}
+</script>
+<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/malfunction/suspendAudit.js"></script>
+</body>
+</html>

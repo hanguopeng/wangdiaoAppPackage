@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>归档</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+
+    <style>
+        .aui-bar-nav{
+            background-color: #e10010;
+        }
+        .aui-icon-left{
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+<div class="bodyContainer bodyPosition">
+    <header class="aui-bar aui-bar-nav headerMarginTop">
+        <div class="aui-pull-left aui-btn">
+            <span class="aui-iconfont aui-icon-left"></span><span class="aui-Font" onclick="api.closeWin()">返回</span>
+        </div>
+        <div class="aui-title">归档</div>
+        <div class="aui-pull-right header_confirm">
+            <span class="aui_Font" onclick="save()">确定</span>
+        </div>
+    </header>
+
+    <div id="workSheet_area" class="aui-padded-l-15 aui-font-size-16">
+            <!--满意度-->
+            <div class="workSheet_Choose_div">
+                <div class="workSheet_Choose_div_sp">
+                    <div class="inline-block">
+                        <div class="inline-block">
+                            <span class="redStar">*</span>
+                            归档满意度：
+                        </div>
+                        <div class="inline-block"  style="width:12rem">
+                            <select id="disposeWay">
+                            </select>
+                            <div  class="inline-block lianTong-icon-down" >
+                                <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
+            </div>
+            <!--归档意见-->
+            <div class="infoMarginTop">
+                <div>
+                    <span class="redStar">*</span>
+                    归档意见：
+                </div>
+                <div>
+                    <textarea  placeholder="请输入" id="remark"></textarea>
+                </div>
+            </div>
+        </div>
+</div>
+<script id="type-selector" type="text/template">
+    {{ for(var i=0;i<it.nameList.length;i++){
+    if(!common.isEmpty(it.nameList[i])){
+    }}
+    <option value="{{=it.idList[i]}}">{{=it.nameList[i]}}</option>
+    {{
+    }
+    }
+    }}
+</script>
+<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/malfunction/archiveWorksheet.js"></script>
+</body>
+</html>

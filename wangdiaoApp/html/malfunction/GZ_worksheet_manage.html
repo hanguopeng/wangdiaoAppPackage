@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>工单处理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/worksheet_manage.css"/>
+</head>
+<body style="background-color: #f5f5f5 !important;position: relative">
+<div id="allProcessTitle">
+    <div class="workSheet_title_left">&nbsp;</div>
+    <div class="workSheet_title_right" onclick="showOrClose(this)">故障工单</div>
+    <div id="allProcessCountInfo" class="allProcessCountInfo aui-show">
+    </div>
+</div>
+<div id="workSheetDetail" style="margin-bottom: 2.8rem;margin-top: 0.3rem">
+
+</div>
+</body>
+
+<script id="all-process-count-info" type="text/template">
+    <div class="aui-text-center countInfo" style="padding-left: 1rem !important;">
+        <div class="countCss waitDisposeCount">{{=it.wait||0}}</div>
+        <div class="circle waitDispose"  onclick="getWaitWorkSheetList()">待</div>
+        <div class="aui-font-size-12 aui-padded-t-5">待办<p style="line-height: 1.39em;">&nbsp;</p></div>
+    </div>
+    <div class="aui-text-center countInfo">
+        <div class="countCss alreadyDisposeCount">{{=it.end||0}}</div>
+        <div class="circle alreadyDispose"  onclick="getEndWorkSheetList()">已</div>
+        <div class="aui-font-size-12 aui-padded-t-5">已办<p style="line-height: 1.39em;">&nbsp;</p></div>
+    </div>
+    <div class="aui-text-center countInfo">
+        <div class="countCss alreadyPigeonholeCount">停用</div>
+        <div class="circle alreadyPigeonhole">归</div>
+        <div class="aui-font-size-12 aui-padded-t-5">已归档<p style="line-height: 1.39em;">&nbsp;</p></div>
+    </div>
+    <div class="aui-text-center countInfo">
+        <div class="countCss alreadyRevocationCount">停用</div>
+        <div class="circle alreadyRevocation" >查</div><!--onclick="getSearchList('../../html/malfunction/GZ_worksheet_search.html')"-->
+        <div class="aui-font-size-12 aui-padded-t-5">工单查询<p style="line-height: 1.39em;">&nbsp;</p></div>
+    </div>
+</script>
+<script id="wait-worksheet-detail" type="text/template">
+    <div class="workSheet_title_left">&nbsp;</div>
+    <div class="workSheet_title_right">{{=it.title}}</div>
+    {{?it.list}}
+    {{~it.list:info:index}}
+    <div class="workSheet_info_card" tapmode onclick="openWorksheetDetail('{{=info.worksheetNo}}','{{=info.processId}}','{{=info.worksheetTitle}}')">
+        <div class="malfunctionLevel">
+            <div style="color: {{=info.level}};background-color: {{=info.level}};" class="levelCircle"></div>
+        </div>
+        <div class="worksheetInfo">
+            <div>{{=info.worksheetNo||''}}</div>
+            <div style="font-size: 0.7rem">
+                <div class="worksheetTitle">工单主题：</div>
+                <div class="worksheetName">{{=info.worksheetTitle||''}}</div>
+            </div>
+            <div class="greyLine" style="width: 96%"></div>
+            <div class="lastAreaStyle">
+                <img class="horologe" src="../../image/horologe.png">
+                <div class="remainingTimeTitle">剩余时间：</div>
+                {{?info.clsssy&&info.clsssy.indexOf("-")==-1}}
+                <div class="remainingTimeInfo">{{=info.clsssy||''}}</div>
+                {{??}}
+                <div class="remainingTimeInfo"  style="color: red">{{=info.clsssy||''}}</div>
+                {{?}}
+                <div class="worksheetStatusTitle">工单状态：</div>
+                <div class="worksheetStatusInfo">{{=info.worksheetStatus||''}}</div>
+            </div>
+        </div>
+        <div class="iconStyle">
+            <span class="aui-iconfont aui-icon-right" style="color: #999999 !important;font-weight: 700;"></span>
+        </div>
+    </div>
+    {{~}}
+    {{?}}
+</script>
+<script id="end-worksheet-detail" type="text/template">
+    <div class="workSheet_title_left">&nbsp;</div>
+    <div class="workSheet_title_right">{{=it.title}}</div>
+    {{?it.list}}
+    {{~it.list:info:index}}
+    <div class="workSheet_info_card" tapmode onclick="openWorksheetDetail('{{=info.worksheetNo}}','{{=info.processId}}','{{=info.worksheetTitle}}')">
+        <div class="malfunctionLevel">
+            <div style="color: {{=info.level}};background-color: {{=info.level}};" class="levelCircle"></div>
+        </div>
+        <div class="worksheetInfo">
+            <div>{{=info.worksheetNo||''}}</div>
+            <div style="font-size: 0.7rem">
+                <div class="worksheetTitle">工单主题：</div>
+                <div class="worksheetName">{{=info.worksheetTitle||''}}</div>
+            </div>
+            <div class="greyLine" style="width: 96%"></div>
+            <div class="lastAreaStyle">
+                <img class="horologe" src="../../image/horologe.png">
+                <div class="remainingTimeTitle">处理时限（小时）：</div>
+                {{?info.dmDealLimit&&info.dmDealLimit.indexOf("-")==-1}}
+                <div class="remainingTimeInfo">{{=info.dmDealLimit||''}}</div>
+                {{??}}
+                <div class="remainingTimeInfo"  style="color: red">{{=info.dmDealLimit||''}}</div>
+                {{?}}
+                <div class="worksheetStatusTitle">工单状态：</div>
+                <div class="worksheetStatusInfo">{{=info.worksheetStatus||''}}</div>
+            </div>
+        </div>
+        <div class="iconStyle">
+            <span class="aui-iconfont aui-icon-right" style="color: #999999 !important;font-weight: 700;"></span>
+        </div>
+    </div>
+    {{~}}
+    {{?}}
+</script>
+<script id="search-worksheet-detail" type="text/template">
+    <div class="workSheet_title_left">&nbsp;</div>
+    <div class="workSheet_title_right">{{=it.title}}</div>
+    {{?it.list}}
+    {{~it.list:info:index}}
+    <div class="workSheet_info_card" tapmode onclick="openWorksheetDetail('{{=info.wsNum}}','{{=info.processId}}','{{=info.wsTitle}}','db','{{=info.dealType}}')">
+        <div class="worksheetInfo">
+            <div>{{=info.wsNum||''}}</div>
+            <div style="font-size: 0.7rem">
+                <div class="worksheetTitle">工单主题：</div>
+                <div class="worksheetName">{{=info.wsTitle||''}}</div>
+            </div>
+            <div class="greyLine" style="width: 96%"></div>
+            <div class="lastAreaStyle">
+                <img class="horologe" src="../../image/horologe.png">
+                <div class="remainingTimeTitle">处理历时：</div>
+                {{?info.clsssy&&info.clsssy.indexOf("-")==-1}}
+                <div class="remainingTimeInfo">{{=info.clsssy||''}}</div>
+                {{??}}
+                <div class="remainingTimeInfo"  style="color: red">{{=info.clsssy||''}}</div>
+                {{?}}
+                <div class="worksheetStatusTitle">工单状态：</div>
+                <div class="worksheetStatusInfo">{{=info.orderState||''}}</div>
+
+            </div>
+        </div>
+        <div class="iconStyle">
+            <span class="aui-iconfont aui-icon-right" style="color: #999999 !important;font-weight: 700;"></span>
+        </div>
+    </div>
+    {{~}}
+    {{?}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/malfunction/GZ_worksheet_manage.js"></script>
+<script type="text/javascript" src="../../script/main/worksheet_manage_public.js"></script>
+</html>

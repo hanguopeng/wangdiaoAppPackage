@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="./css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/rams.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/login.css"/>
+    <style>
+        input[type="checkbox"] {
+            width: 0.7rem;
+            height: 0.7rem;
+            display: inline-block;
+            vertical-align: text-after-edge;
+            position: relative;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fff;
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 3px;
+            border: 1px solid #e10010
+        }
+
+        input[type="checkbox"]:checked::before {
+            content: "\2713";
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 3px;
+            border: 1px solid #e10010;
+            color: #e10010;
+            font-size: 0.6rem;
+            text-align:center;
+        }
+    </style>
+</head>
+<body style="background-color: white">
+<div class="title">
+    <img class="logo" src="./image/liantong_icon.png">
+    <h2 align="center" style="font-weight: 700 !important;">吉林联通</h2>
+    <h2 align="center" style="font-weight: 700 !important;">网运生产调度平台</h2>
+</div>
+<div class="login-style greyFont">
+    <div class="greyLine" style="margin-left: 2%;width: 97%"></div>
+    <div style="position: relative">
+        <input id="userName"  class="userName" type="text" maxlength="20"  value="" placeholder="请输入用户名">
+        <img class="userNameImg" src="./image/reset.png" onclick="resetUserName()"/>
+    </div>
+    <div class="greyLine" style="margin-left: 3%;width: 96%"></div>
+    <div style="position: relative">
+        <input id="userPass" class="userPass" type="password" value="" placeholder="请输入密码">
+        <img id="userPassImg" class="userPassImg" src="./image/hidePwd.png"  onclick="hideShowPwd()"/>
+    </div>
+    <div class="greyLine" style="margin-left: 2%;width: 97%"></div>
+    <div>
+        <input id="remMe" class="remMe" type="checkbox">
+        <div style="display:inline; margin-top: 1rem;">记住密码</div>
+        <!--<div class="forgetPwd">忘记密码？</div>-->
+    </div>
+    <div>
+        <div id="loginBtn" class="aui-btn rams-font3 loginBtn"
+             tapmode onclick="login()">登录
+        </div>
+        <div id="resetBtn" class="aui-btn rams-font3 resetBtn "
+             tapmode onclick="reset()">重置
+        </div>
+        <br/>
+    </div>
+    <img style="width:150px;height:150px;position:absolute;right:0;bottom:0;" src="./image/liantong_dark_fringe.png">
+</div>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/config.js"></script>
+<script type="text/javascript" src="./script/common.js"></script>
+<script>
+    apiready = function () {
+        api.addEventListener({
+            name: 'goRoot'
+        }, function (ret, err) {
+            window.location.reload();//刷新页面
+        });
+        api.parseTapmode();
+        var header = document.querySelector('#header');
+        immersive(header);
+
+        document.onkeyup = function (e) {
+            var code = e.charCode || e.keyCode;
+            if (code == 13) {
+                login();
+            }
+        }
+        $api.setStorage(storageKey.versionInfo,api.appVersion);
+        var storageUserName = $api.getStorage(storageKey.loginName);
+        if(storageUserName){
+            $api.val($api.byId("userName"),storageUserName);
+            $api.val($api.byId("userPass"),$api.getStorage(storageKey.loginPwd));
+            $api.byId("remMe").checked = true;
+        }
+    };
+
+    function hideShowPwd() {
+        var demoInput = document.getElementById("userPass");
+        var demoImg = document.getElementById("userPassImg");
+        if (demoInput.type == "password") {
+            demoInput.type = "text";
+            demoImg.src ="./image/showPwd.png";
+        } else {
+            demoInput.type = "password";
+            demoImg.src = "./image/hidePwd.png";
+        }
+    }
+
+    function resetUserName() {
+        $api.val($api.byId('userName'),'')
+    }
+
+    function reset() {
+        $api.val($api.byId('userName'),'')
+        $api.val($api.byId('userPass'),'')
+
+    }
+    /*
+     * 沉浸式
+     */
+    function immersive(header) {
+        var systemType = api.systemType;  // 获取手机类型，比如： ios
+        if (systemType == 'ios') {//兼容ios和安卓
+            $api.addCls(header, 'headerIos');
+        } else {
+            $api.addCls(header, 'headerAnd');
+        }
+        api.setStatusBarStyle({
+            color: '#e7e7e7',//设置APP状态栏背景色
+            style: 'light'
+        });
+    }
+
+    function login() {
+        var userName = $api.trim($api.val($api.byId('userName')));
+        var userPass = $api.trim($api.val($api.byId('userPass')));
+        var remMe = $api.byId('remMe').checked;
+        if(userName==""){
+            api.toast({
+                msg: '用户名不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+
+        if(userPass==""){
+            api.toast({
+                msg: '用户密码不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+
+
+        common.post({
+            url: config.loginUrl  ,
+            isLoading: true,
+            text: "登录中...",
+            data:{
+                j_username:userName,
+                j_password:userPass
+            },
+            success: function (ret) {
+                if (ret.status==='200'){
+                    // 清空manage页刷新判断依据
+                    $api.setStorage(storageKey.operate_status,'');
+                    $api.setStorage(storageKey.process_choose_pageName, "")
+                    $api.setStorage(storageKey.loginUser,ret.data);
+                    if (remMe){
+                        $api.setStorage(storageKey.loginName,userName);
+                        $api.setStorage(storageKey.loginPwd,userPass);
+                    } else{
+                        $api.rmStorage(storageKey.loginName);
+                        $api.rmStorage(storageKey.loginPwd);
+                    }
+                    common.post({
+                        url:config.getAllDeptAndUserUrl ,
+                        isLoading:true,
+                        data:{
+                            id:"-1"
+                        },
+                        success:function(ret1){
+                            if(ret1&&ret1.data&&ret1.data.length>0){
+                                for(var i=0;i<ret1.data.length;i++){
+                                    var item = ret1.data[i];
+                                    if(ret.data.deptId === item.id){
+                                        ret.data.name = item.name
+                                        $api.setStorage(storageKey.loginUser,ret.data);
+                                    }
+                                }
+                            }
+                        }
+                    })
+
+                    openWin();
+                } else {
+                    // 因为返回的错误信息是英文，所有没有单独显示错误信息。
+                    api.toast({
+                        msg:  '登录失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        });
+
+
+    }
+
+    function openWin() {
+        api.toast({
+            msg:  '登陆成功！',
+            duration: config.duration,
+            location: 'middle'
+        });
+        api.openWin({
+            name: 'win_main',
+            bounces: false,
+            slidBackEnabled : false,
+            reload:true,
+            url: './html/main/win_worksheet_manage.html',
+            vScrollBarEnabled:true,
+            hScrollBarEnabled:false
+        });
+    }
+</script>
+</body>
+</html>

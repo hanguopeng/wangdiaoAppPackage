@@ -1,0 +1,264 @@
+.greyLine {
+    width: 100%;
+    height: 1px;
+    background: #e7e7e7;
+}
+.menuLine {
+    width: 80%;
+    height: 1px;
+    margin-left: 10%;
+    background: #e7e7e7;
+    margin-top: -0.4rem;
+}
+.redLine {
+    width: 100%;
+    height: 1px;
+    background: #fd2f2f;
+}
+
+
+.greyFont {
+    color: #666666
+}
+
+.rams-YaHei {
+    font-family: 'Microsoft YaHei';
+}
+
+.rams-font1 {
+    font-size: 0.6rem;
+}
+
+.rams-font2 {
+    font-size: 0.7rem;
+}
+
+.rams-font3 {
+    font-size: 0.8rem;
+}
+
+.rams-font4 {
+    font-size: 0.9rem;
+}
+
+.textarea {
+    border: solid 1px #e7e7e7;
+    border-radius: 2px;
+    resize: none;
+    font-size: 0.8rem;
+    width: 100%;
+    height: 250px;
+}
+
+.win-header {
+    background-color: #e10010;
+}
+
+.win-header-item {
+    display: inline-block;
+}
+
+.bodyPosition {
+    position: relative
+}
+
+.tabBody-div {
+    margin-top: 1.5rem;
+}
+
+.workSheet_Header_div {
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+input::-webkit-input-placeholder {
+
+    /* placeholder位置  */
+    text-align: left;
+
+}
+
+.redStar {
+    color: #e10010;
+}
+
+.whiteStar {
+    color: white;
+}
+
+body {
+    background-color: #fff;
+}
+
+.workSheet_Choose_div {
+    height: 2.3rem;
+    width: 100%;
+}
+
+.workSheet_Choose_div_sp {
+    height: 1.9rem;
+    width: 100%;
+    position: relative;
+}
+
+textarea {
+    resize: none;
+    width: 96%;
+    height: 14.5625rem;
+    border: 1px solid #e7e7e7;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+    margin-top: 0.6rem;
+    padding: 0.3125rem;
+}
+
+textarea::-webkit-input-placeholder {
+
+    height: 14.5625rem;
+    line-height: 14.5625rem;
+}
+
+/* 使用webkit内核的浏览器 */
+.contactusform > textarea::-moz-placeholder {
+    height: 14.5625rem;
+    line-height: 14.5625rem;
+}
+
+/* Firefox版本4-18 */
+.contactusform > textarea::-moz-placeholder {
+    height: 14.5625rem;
+    line-height: 14.5625rem;
+}
+
+/* Firefox版本19+ */
+.contactusform > textarea::-ms-input-placeholder {
+    height: 14.5625rem;
+    line-height: 14.5625rem;
+}
+
+.workSheet_ChooseSpanFont {
+    color: #c7c7c7;
+}
+/*20191008样式整理*/
+.headerMarginTop {
+    margin-top: 0.8rem;
+}
+
+.bodyMarginTop {
+    margin-top: 3rem;
+}
+
+.infoMarginTop {
+    margin-top: 0.3rem;
+}
+
+
+.greyLine96 {
+    width: 96%;
+    height: 1px;
+    background: #e7e7e7;
+    margin-top: 0.3rem;
+}
+
+/*行块内元素*/
+.inline-block {
+    display: inline-block;
+}
+
+/*向下箭头样式*/
+.lianTong-icon-down {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+    font-size: 0.8rem;
+}
+
+/*居右显示*/
+.rams-float-right{
+    float: right;
+}
+.header_confirm{
+    margin-right: 0.3rem;
+}
+.workSheet_search {
+    height: 1.8rem;
+    width: 100%;
+}
+.workSheet_search_redLine {
+    width: 100%;
+    height: 1px;
+    background: #fd2f2f;
+    margin-top: 0;
+}
+.workSheet_search_item {
+    height: 1.3rem;
+    width: 100%;
+    position: relative;
+}
+.workSheet_search_item_span{
+    font-size: 0.6rem;
+
+}
+.workSheet_search_btn {
+    display: table-cell;
+    position: relative;
+    width: 1%;
+    line-height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 0;
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e7e7e7;
+    border-left-width: 0;
+
+}
+.workSheet_search_blackArea{
+    width: 100%;
+    height: 14.3rem;
+    background-color: #616161;
+
+
+}
+.workSheet_search_title_img{
+    padding-bottom: 0.5rem;
+    margin-top:0rem;
+    height:13%;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    text-align: right;
+    display: inline-block;
+    vertical-align: middle;
+}
+.aui-list-item-input{
+     -web-kit-appearance:none;
+     -moz-appearance: none;
+     font-size:0.7em;
+     border-radius:0.1rem;
+     border:1px solid #c8cccf;
+     color:#6a6f77;
+     width: 100%;
+     height: 1rem;
+
+ }
+.aui-list-item-select{
+    -web-kit-appearance:none;
+    -moz-appearance: none;
+    font-size:0.7em;
+    border-radius:0.1rem;
+    border:1px solid #c8cccf;
+    color:#6a6f77;
+    width: 100%;
+    height: 1rem;
+}
+.aui-list-item-input::-webkit-input-placeholder {
+    /* placeholder字体大小  */
+    font-size: 0.5rem;
+}
+
+
+
