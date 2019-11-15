@@ -206,7 +206,7 @@ function initMenu() {
                     }else if(key==='追派'){
                         data.imgUrl = 'zhuipai.png';
                         data.pageUrl = 'appendWorkSheet';
-                    }else if(key==='返单'){
+                    }else if(key==='返单'||key==='排除返单'){
                         data.imgUrl = 'fandan.png';
                         data.pageUrl = 'overWorksheet';
                     }else if(key==='确认结单'){
