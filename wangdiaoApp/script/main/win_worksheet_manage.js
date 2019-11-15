@@ -46,6 +46,9 @@ function openAppointPage(name){
             location: 'middle'
         });
         return
+    }else if(name==='./person_center'){  // 工单处理/我的互相切换时，可能导致开多次，所以当去我的页时，关闭工单处理frame
+        common.sendEvent("close_ZT_worksheet_manage");
+        common.sendEvent("close_GZ_worksheet_manage");
     }
     api.openWin({
         name: name,
@@ -88,7 +91,8 @@ function openMainFrame() {
 }
 function processChoose() {
     var header_h = $api.getStorage("win_header_height");
-    var footer_h = $api.getStorage("win_footer_height")
+    var footer_h = $api.getStorage("win_footer_height");
+    common.sendEvent("close_ZTWorksheet_search");//关闭工单查询页面
     api.openFrame({
         name: 'process_choose',
         url: './process_choose.html',

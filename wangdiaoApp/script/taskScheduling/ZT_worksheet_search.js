@@ -9,6 +9,13 @@ var dmHapTime = "";
 var dmHapTimee = "";
 var orderstate = "";
 apiready = function() {
+    api.addEventListener({
+        name: 'close_ZTWorksheet_search'
+    }, function () {
+        api.closeFrame({
+            name:'worksheet_search'
+        });
+    })
 };
 //时间函数
 jeDate("#startTime",{
@@ -112,6 +119,8 @@ function changeArea(cityId) {
                 }
             }
         });
+    } else {
+        $api.html($api.byId('selArea'), "");
     }
 }
 //选择地市后才可以选择区县
