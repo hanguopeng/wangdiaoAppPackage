@@ -146,6 +146,28 @@ function loadFlowInfo() {
         }
     });
 }
+function getFlowDetails(id) {
+    var wsNum = $api.getStorage(storageKey.wsNum);
+    common.post({
+        url: config.GZ_getFlowDetails,
+        isLoading: true,
+        data:{
+            wsNum:wsNum,
+            id:id
+        },
+        success: function (ret) {
+            if (ret.status === '200'){
+                showFlowDetail(ret.data)
+            }else{
+                api.toast({
+                    msg: '流转详情获取失败！',
+                    duration: config.duration,
+                    location: 'middle'
+                });
+            }
+        }
+    });
+}
 function keyBackListener() {
     api.addEventListener({
         name: 'keyback'
@@ -359,4 +381,47 @@ function showMenu() {
         }
 
     }
+}
+
+
+// 展示选中的流程详情
+function showFlowDetail(model) {
+    var processName = model.task_type
+    // 初始值为其他流程的frame尺寸
+    var  x = 30;
+    var  y= 230;
+    var  w= 300;
+    var  h= 200;
+    if (processName==='确认结单'||processName==='处理反馈') {
+        y=100;
+        h=450;
+    }
+    // 给整体一个遮罩层
+    api.openFrame({
+        name: 'black',
+        url: '../../html/main/black.html',
+        rect: {
+            x: 0,
+            y: 0,
+            w: 'auto',
+            h: 'auto'
+        },
+    });
+    api.openFrame({ // 打开Frame
+        name: 'GZ_flowInfo_detail',
+        url: 'GZ_flowInfo_detail.html',
+        rect: {
+            x: x,
+            y: y,
+            w: w,
+            h: h
+        },
+        pageParam: {
+            model: model
+        },
+        bounces: true,
+        reload: true,
+        vScrollBarEnabled: false
+    });
+
 }

@@ -120,16 +120,16 @@
 </footer>
 </body>
 <script id="versionInfo" type="text/template">
-    <div style="color:#AAAFB8" class="aui-font-size-12 aui-text-center">V&nbsp&nbsp{{=it.code}}</div>
+    <div style="color:#AAAFB8" class="aui-font-size-12 aui-text-center">V&nbsp&nbsp{{=it.code||''}}</div>
 </script>
 <script id="personName" type="text/template">
-    <div class="" style="text-align: center">{{=it.username}}</div>
+    <div class="" style="text-align: center">{{=it.username||''}}</div>
 </script>
 <script id="personPhone" type="text/template">
-    <div class="aui-text-center">{{=it.mobile}}</div>
+    <div class="aui-text-center">{{=it.mobile||''}}</div>
 </script>
 <script id="my-dept-conTmpl" type="text/template">
-    <div style="text-align: center">{{=it.name}}</div>
+    <div style="text-align: center">{{=it.name||''}}</div>
 </script>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>

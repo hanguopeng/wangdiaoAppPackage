@@ -34,6 +34,7 @@ var config= {
     noDealFeedBackWorksheetCommitUrl: localServer + "/dm/faultaccepting.do?method=noFeedbackWorksheet&type=android",          //  未排除返单提交接口
     noDealFeedBackWorksheetDetailUrl: localServer + "/dm/faultaccepting.do?method=noDealFeedBackWorksheetTZ&type=android",              //  未排除返单  数据回显接口
     GZ_checkWorksheet: localServer + "/dm/faultaccepting.do?method=checkWorksheet",              //  检查工单是否可以提交接口
+    GZ_getFlowDetails: localServer + "/dm/mobile.do?method=details&type=android",           //故障工单获取流转详情
     // 中台专用
     ZTWaitEndArchiveCount: localServer + "/dm/taskSchedulingCount.do?method=worksheetListTotal&type=android",   //待办/已办/归档数量
     ZTWaitWorksheetUrl: localServer + "/dm/taskScheduling.do?method=taskWaitWorksheetList&type=android",   //待办列表
