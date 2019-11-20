@@ -74,7 +74,7 @@ function machineFlowInfo() {
         list.push({key:'超时原因',value:model.timeout_reason})
         list.push({key:'故障开始时间',value:model.dmhapptime})
         list.push({key:'业务恢复时间',value:model.busrec_date})
-        if (model.jh==='KH'){
+        if (model.jk==='KH'){
             list.push({key:'业务恢复历时',value:''})   // todo  在原app中业务恢复历时一般都没有值
         }else{
             list.push({key:'故障历时',value:model.dmdeallast})
@@ -103,7 +103,7 @@ function machineFlowInfo() {
         list.push({key:'超时原因',value:model.timeout_reason})
         list.push({key:'故障开始时间',value:model.dmhapptime})
         list.push({key:'业务恢复时间',value:model.busrec_date})
-        if (model.jh==='KH'){
+        if (model.jk==='KH'){
             list.push({key:'业务恢复历时',value:''})
         }else{
             list.push({key:'故障历时',value:model.dmdeallast})
