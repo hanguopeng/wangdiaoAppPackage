@@ -13,14 +13,17 @@ apiready = function() {
         name: 'close_ZTWorksheet_search'
     }, function () {
         api.closeFrame({
-            name:'worksheet_search'
+            name:'ZT_worksheet_search'
         });
     })
 };
+var now = new Date();
 //时间函数
 jeDate("#startTime",{
     language:enLang,
     format: "YYYY-MM-DD hh:mm:ss",
+    isinitVal:true,
+    initDate:[{DD:"-7",hh:-now.getHours(),mm:-now.getMinutes(),ss:-now.getSeconds()},true],   //初始化时间
     donefun : function(obj){    //回调函数
         var endTime = new Date(($api.val($api.byId('endTime'))).replace(/-/g,"/")).getTime();
         var startTime = new Date(obj.val.replace(/-/g,"/")).getTime();
@@ -34,6 +37,8 @@ jeDate("#startTime",{
 jeDate("#endTime",{
     language:enLang,
     format: "YYYY-MM-DD hh:mm:ss",
+    isinitVal:true,
+    initDate:[{hh:23,mm:59,ss:59},false],   //初始化日期
     donefun : function(obj){    //回调函数
         var startTime = new Date(($api.val($api.byId('startTime'))).replace(/-/g,"/")).getTime();
         var endTime = new Date(obj.val.replace(/-/g,"/")).getTime();
@@ -92,7 +97,7 @@ function save() {
 function closeFrame(){
     common.sendEvent("close_BlackFrame");
     api.closeFrame({
-        name:'worksheet_search'
+        name:'ZT_worksheet_search'
     });
 
 }

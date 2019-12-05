@@ -51,7 +51,7 @@
             <div class="workSheet_search" >
                 <div  class="workSheet_search_item" style="padding-top: 0.55rem;">
                     <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right;">
-                        <span class="workSheet_search_item_span">工单流水</span>
+                        <span class="workSheet_search_item_span">工单流水号</span>
                     </div>
                     <div class="inline-block" style="width: 40% ; text-align: left">
                         <input class="aui-list-item-input" id="wsNum" name="" placeholder="请输入">
@@ -61,7 +61,7 @@
             <div class="workSheet_search">
                 <div  class="workSheet_search_item" style="padding-top: 0.55rem">
                     <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right" >
-                        <span class="workSheet_search_item_span">工单主题</span>
+                        <span class="workSheet_search_item_span">工单主题/客户名称</span>
                     </div>
                     <div class="inline-block" style="width: 40% ; text-align: left">
                         <input class="aui-list-item-input" id="wsTitle" placeholder="请输入">
@@ -119,7 +119,7 @@
                         <span class="workSheet_search_item_span">工单类型</span>
                     </div>
                     <div class="inline-block" style="width: 40% ; text-align: left">
-                        <select class="aui-list-item-select" id="orderType" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem;z-index: 9999">
+                        <select class="aui-list-item-select" id="objectType" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem;z-index: 9999">
                             <option value="" selected="selected">全部</option>
                             <option value="=" >自动工单</option>
                             <option value="<>" >手动工单</option>
@@ -131,9 +131,10 @@
                 <div  class="workSheet_search_item" style="padding-top: 0.55rem">
                     <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
                         <span class="workSheet_search_item_span">地市</span>
+                        <span class="workSheet_search_item_span" style="color: red">自动派单专用</span>
                     </div>
                     <div class="inline-block" style="width: 40%; text-align: left">
-                        <select onchange="initArea()" id="selCity" name="city" class="aui-list-item-select" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem">
+                        <select onchange="initArea(this.value)" id="selCity" name="city" class="aui-list-item-select" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem">
                         </select>
                     </div>
                 </div>
@@ -142,6 +143,7 @@
                 <div  class="workSheet_search_item" style="padding-top: 0.55rem;position: absolute;z-index: 1000">
                     <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
                         <span class="workSheet_search_item_span">区县</span>
+                        <span class="workSheet_search_item_span" style="color: red">自动派单专用</span>
                     </div>
                     <div class="inline-block" style="width: 40%; text-align: left">
                         <select onclick="AlertMessage()" class="aui-list-item-select" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem" name="area" id="selArea">
@@ -153,7 +155,7 @@
             <div class="workSheet_search" >
                 <div  class="workSheet_search_item" style="padding-top: 0.55rem;position: absolute;z-index: 1000">
                     <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
-                        <span class="workSheet_search_item_span">开始时间</span>
+                        <span class="workSheet_search_item_span">建单时间起期</span>
                     </div>
                     <div class="inline-block" style="width: 40% ; text-align: left">
                         <input class="aui-list-item-input" value="" id="startTime" placeholder="请输入">
@@ -164,7 +166,7 @@
             <div class="workSheet_search" >
                 <div  class="workSheet_search_item" style="padding-top: 0.55rem;position: absolute;z-index: 1000">
                     <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
-                        <span class="workSheet_search_item_span">结束时间</span>
+                        <span class="workSheet_search_item_span">建单时间止期</span>
                     </div>
                     <div class="inline-block" style="width: 40% ; text-align: left">
                         <input class="aui-list-item-input" value="" id="endTime" placeholder="请输入" >
@@ -202,7 +204,7 @@
     }}
 </script>
 <script id="city" type="text/template">
-    <option value=""  selected >请选择</option>
+    <option value="" selected >请选择</option>
     {{ for(var i=0;i<it.nameList.length;i++){
     if(!common.isEmpty(it.nameList[i])){
     }}

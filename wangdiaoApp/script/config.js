@@ -11,6 +11,8 @@ var config= {
     waitAndEndWorksheet: localServer + "/dm/mobile.do?method=worksheetListTotal&type=android",   //待办和已办数量
     waitWorksheetListUrl: localServer + "/dm/faultaccepting.do?method=waitWorksheetListForAndroid&type=android",   //待办列表接口
     endWorksheetListUrl: localServer + "/dm/faultaccepting.do?method=hasBeenWorksheetListForAndroid&type=android",   //已办列表接口
+    archiveWorksheetListListUrl: localServer + "/dm/faultaccepting.do?method=endWorksheetList&type=android",   //归档列表接口
+    allWorksheetList: localServer + "/dm/faultaccepting.do?method=allWorksheetDetailsList&type=android",     // 工单查询列表
     worksheetDetailUrl: localServer + "/dm/dispatch.do?method=worksheetDetail&type=android",  //工单详情-工单信息接口 // http://192.168.1.126:8080/rams_v3/dm/dispatch.do?method=worksheetDetail&type=android&wsNum=SH-KH-190820-06683
     flowInfoUrl: localServer + "/dm/mobile.do?method=getworkList&type=android",  //工单详情-流转信息-处理信息接口，/dm/mobile.do?method=getworkList&type=android&wsNum=SH-KH-190820-06683&processId=
     getProcessMenu: localServer + "/dm/permissions.do?method=permissions1",   // 工单流程菜单获取接口
@@ -28,19 +30,21 @@ var config= {
     chooseObjectUrl: localServer + "/dm/faultaccepting.do?method=accountWorksheetTZ&type=android",           // 确认结单-对象选择
     archiveWorksheetUrl: localServer + "/dm/faultaccepting.do?method=archiveWorksheet&type=android",          // 归档
     processWorksheetUrl: localServer + "/dm/faultaccepting.do?method=processWorksheet&type=android",          // 接单开始处理接口
-    getSuspendAuditModelUrl: localServer + "/dm/faultaccepting.do?method=pendingauditWorksheetTZ&type=android",          //  挂起审核：挂起审核对象
+    getSuspendAuditModelUrl: localServer + "/dm/faultaccepting.do?method=pendingauditWorksheetTZ&type=android",          //  挂起审核：挂起类型获取
     suspendAuditModelEchoUrl: localServer + "/dm/faultaccepting.do?method=pendingauditWorksheetProcessLog&type=android",          //  挂起审核：对象选中后回显
     accountWorksheetDetail: localServer + "/dm/faultaccepting.do?method=accountWorksheetDetail&type=android", //确认结单：返单对象选中后回显
     noDealFeedBackWorksheetCommitUrl: localServer + "/dm/faultaccepting.do?method=noFeedbackWorksheet&type=android",          //  未排除返单提交接口
     noDealFeedBackWorksheetDetailUrl: localServer + "/dm/faultaccepting.do?method=noDealFeedBackWorksheetTZ&type=android",              //  未排除返单  数据回显接口
-    GZ_checkWorksheet: localServer + "/dm/faultaccepting.do?method=checkWorksheet",              //  检查工单是否可以提交接口
+    GZ_checkWorksheet: localServer + "/dm/faultaccepting.do?method=checkWorksheet&type=android",              //  检查工单是否可以提交接口
+    GZ_checkWorksheetForArchive: localServer + "/dm/faultaccepting.do?method=checkArchiveAgain&type=android",              //  检查工单--归档专用
+    GZ_checkWorksheetForForward: localServer + "/dm/dispatch.do?method=checkSingletree&type=android",              //  检查工单--转派追派专用
     GZ_getFlowDetails: localServer + "/dm/mobile.do?method=details&type=android",           //故障工单获取流转详情
     // 中台专用
     ZTWaitEndArchiveCount: localServer + "/dm/taskSchedulingCount.do?method=worksheetListTotal&type=android",   //待办/已办/归档数量
     ZTWaitWorksheetUrl: localServer + "/dm/taskScheduling.do?method=taskWaitWorksheetList&type=android",   //待办列表
     ZTEndWorksheetListUrl: localServer + "/dm/taskScheduling.do?method=taskHasBeenWorksheetList&type=android",    //已办列表
     ZTArchiveWorksheetListListUrl: localServer + "/dm/taskScheduling.do?method=taskEndWorksheetList&type=android",    //归档列表
-    ZTTaskAllWorksheetList: localServer + "/dm/taskScheduling.do?method= taskAllWorksheetList&type=android",     // 工单查询列表
+    ZTTaskAllWorksheetList: localServer + "/dm/taskScheduling.do?method=taskAllWorksheetList&type=android",     // 工单查询列表
     ZTWorksheetDetailUrl: localServer + "/dm/taskScheduling.do?method=worksheetDetail&type=android",            //工单详情
     ZTGetProcessMenu: localServer + "/dm/taskSchedulingPermissions.do?method=permissions",          // 工单流程菜单获取接口
     ZTProcessWorksheetUrl: localServer + "/dm/taskScheduling.do?method=processWorksheet&type=android",          // 接单开始处理接口
@@ -57,7 +61,6 @@ var config= {
     ZTReturnToreProcessing: localServer + "/dm/taskScheduling.do?method=againprocessWorksheet&type=android", //退回重新处理
     ZTRevocationWorksheet: localServer + "/dm/taskScheduling.do?method=revocationWorksheet&type=android", //自动工单-撤销
     ZTWorksheetSearchArea: localServer +"/dm/feedback.do?method=queryArea",//工单查询-区县
-
 }
 var storageKey = {
     loginName: "loginName",//登录用户名（用来判断是否记住密码）
@@ -67,6 +70,8 @@ var storageKey = {
     wsNum: "wsNum",   //工单号
     wsTitle: "wsTitle",//工单主题
     processId: "processId",  // 流程id
+    dmPro: "dmPro",  // 专业
+
     versionInfo: 'versionInfo', //版本信息
 
     data_id: "data_id",    //选中节点id
@@ -87,7 +92,10 @@ var storageKey = {
 
 
 var parentdictid = {
-    suspendApplication: 10111,    //挂起申请 字典值父id
+    suspendApplication: {
+        KH: 10122,   // 大客户工单
+        other:10111
+    },    //挂起申请 字典值父id
     appendWorksheet: 10127,    //追派 字典值父id
     forwardWorksheet: 10126,    //转派 字典值父id
     suspendAudit: 10126,    //挂起审核 字典值父id
@@ -98,6 +106,8 @@ var parentdictid = {
     overWorksheet_ifDeptMalfunction: 10109,    // 返单-是否本部门故障字典值父id
     overWorksheet_malfunctionArea: 10103,    // 返单-故障区域字典值父id
     overWorksheet_ifInfluenceProfessionalWork: 10110,    // 返单-是否影响业务字典值父id
+    overWorksheet_isBusinessAllStop:10132,// 返单-传输专业-是否业务全阻
+    overWorksheet_dealFkPosition:10133,// 返单-传输专业-位置
     overWorksheet_malfunctionSpecialty: 10101,    // 返单-故障专业字典值父id
     GZ_worksheet_search_level:10102,// 工单查询—故障级别
 

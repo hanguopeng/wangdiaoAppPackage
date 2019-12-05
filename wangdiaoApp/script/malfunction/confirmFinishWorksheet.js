@@ -138,7 +138,7 @@ function submitData() {
                     isLoading: true,
                     data:{
                         wsNum:wsNum,
-                        type:'QRJD'
+                        operateType:'QRJD'
                     },
                     success: function (ret) {
                         if(ret.jd&&ret.jd == '5'){
@@ -147,8 +147,9 @@ function submitData() {
                                 duration: 2000,
                                 location: 'middle'
                             });
+                            return;
                         }
-                        if(ret.returnvar == '0'){
+                        if(ret.returnvar === '0'){
                             common.post({
                                 url: config.confirmFinishWorksheetUrl ,
                                 isLoading: false,
@@ -200,37 +201,42 @@ function submitData() {
                                     }
                                 }
                             });
-                        }else if(ret.returnvar == '1'){
+                            return;
+                        }else if(ret.returnvar === '1'){
                             api.toast({
                                 msg: '此工单已撤销!',
                                 duration: 2000,
                                 location: 'middle'
                             });
-                        }else if(ret.returnvar == '2'){
+                            return;
+                        }else if(ret.returnvar === '2'){
                             api.toast({
                                 msg: '此工单已挂起!',
                                 duration: 2000,
                                 location: 'middle'
                             });
-                        }else if(ret.returnvar == '3'){
+                            return;
+                        }else if(ret.returnvar === '3'){
                             api.toast({
                                 msg: ret.message,
                                 duration: 2000,
                                 location: 'middle'
                             });
-
-                        }else if(ret.returnvar == '4'){
+                            return;
+                        }else if(ret.returnvar === '4'){
                             api.toast({
                                 msg: '确认结单时不允许选择未排除返单的信息,请重新选择派发对象(追派)或退回重新处理!',
                                 duration: 2000,
                                 location: 'middle'
                             });
-                        }else if (ret.returnvar == '7') {
+                            return;
+                        }else if (ret.returnvar === '7') {
                             api.toast({
                                 msg: '告警未清除，不能进行处理反馈!',
                                 duration: 2000,
                                 location: 'middle'
                             });
+                            return;
                         }
                     }
                 });

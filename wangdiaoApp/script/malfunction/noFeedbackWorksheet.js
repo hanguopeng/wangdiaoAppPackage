@@ -52,7 +52,7 @@ function save() {
     var dmdeallast = $api.trim($api.val($api.byId('dmdeallast')));            //故障历时
     var busrecDate = $api.trim($api.val($api.byId('busrecDate')));            //业务恢复时间
     api.confirm({
-        title: '确认返单',
+        title: '确认未排除返单',
         msg: '是否提交？',
         buttons: ['确定', '取消']
     }, function(retBtn, err) {

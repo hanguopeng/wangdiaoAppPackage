@@ -34,13 +34,12 @@
         <div class="aui-font-size-12 aui-padded-t-5">已办<p style="line-height: 1.39em;">&nbsp;</p></div>
     </div>
     <div class="aui-text-center countInfo">
-        <div class="countCss alreadyPigeonholeCount">停用</div>
-        <div class="circle alreadyPigeonhole">归</div>
+        <div class="countCss alreadyDisposeCount">{{=it.archive||0}}</div>
+        <div class="circle alreadyPigeonhole" onclick="getArchiveSheetList()">归</div>
         <div class="aui-font-size-12 aui-padded-t-5">已归档<p style="line-height: 1.39em;">&nbsp;</p></div>
     </div>
     <div class="aui-text-center countInfo">
-        <div class="countCss alreadyRevocationCount">停用</div>
-        <div class="circle alreadyRevocation" >查</div><!--onclick="getSearchList('../../html/malfunction/GZ_worksheet_search.html')"-->
+        <div class="circle alreadyRevocation" onclick="search('../../html/malfunction/GZ_worksheet_search.html')">查</div>
         <div class="aui-font-size-12 aui-padded-t-5">工单查询<p style="line-height: 1.39em;">&nbsp;</p></div>
     </div>
 </script>
@@ -114,30 +113,53 @@
     {{~}}
     {{?}}
 </script>
+<script id="archive-worksheet-detail" type="text/template">
+    <div class="workSheet_title_left">&nbsp;</div>
+    <div class="workSheet_title_right">{{=it.title}}</div>
+    {{?it.list}}
+    {{~it.list:info:index}}
+    <div class="workSheet_info_card" tapmode onclick="openWorksheetDetail('{{=info.worksheetNo}}','{{=info.processId}}','{{=info.worksheetTitle}}','gd','{{=info.dealType}}')">
+        <div class="worksheetInfo">
+            <div>{{=info.worksheetNo||''}}</div>
+            <div style="font-size: 0.7rem">
+                <div class="worksheetTitle">工单主题：</div>
+                <div class="worksheetName">{{=info.worksheetTitle||''}}</div>
+            </div>
+            <div class="greyLine" style="width: 96%"></div>
+            <div class="lastAreaStyle">
+                <img class="horologe" src="../../image/horologe.png">
+                <!--<div class="remainingTimeTitle">处理历时：</div>-->
+                <!--<div class="remainingTimeInfo">{{=info.clsssy||''}}</div>-->
+                <div class="worksheetStatusTitle">工单状态：</div>
+                <div class="worksheetStatusInfo">归档</div>
+            </div>
+        </div>
+        <div class="iconStyle">
+            <span class="aui-iconfont aui-icon-right" style="color: #999999 !important;font-weight: 700;"></span>
+        </div>
+    </div>
+    {{~}}
+    {{?}}
+</script>
 <script id="search-worksheet-detail" type="text/template">
     <div class="workSheet_title_left">&nbsp;</div>
     <div class="workSheet_title_right">{{=it.title}}</div>
     {{?it.list}}
     {{~it.list:info:index}}
-    <div class="workSheet_info_card" tapmode onclick="openWorksheetDetail('{{=info.wsNum}}','{{=info.processId}}','{{=info.wsTitle}}','db','{{=info.dealType}}')">
+    <div class="workSheet_info_card" tapmode onclick="openWorksheetDetail('{{=info.wsNum}}','{{=info.processId}}','{{=info.wsTitle}}','cx','{{=info.dealType}}')">
         <div class="worksheetInfo">
-            <div>{{=info.wsNum||''}}</div>
+            <div>{{=info.WS_NUM||''}}</div>
             <div style="font-size: 0.7rem">
                 <div class="worksheetTitle">工单主题：</div>
-                <div class="worksheetName">{{=info.wsTitle||''}}</div>
+                <div class="worksheetName">{{=info.WS_TITLE||''}}</div>
             </div>
             <div class="greyLine" style="width: 96%"></div>
             <div class="lastAreaStyle">
                 <img class="horologe" src="../../image/horologe.png">
                 <div class="remainingTimeTitle">处理历时：</div>
-                {{?info.clsssy&&info.clsssy.indexOf("-")==-1}}
-                <div class="remainingTimeInfo">{{=info.clsssy||''}}</div>
-                {{??}}
-                <div class="remainingTimeInfo"  style="color: red">{{=info.clsssy||''}}</div>
-                {{?}}
+                <div class="remainingTimeInfo">{{=info.DEALLAST1||''}}</div>
                 <div class="worksheetStatusTitle">工单状态：</div>
-                <div class="worksheetStatusInfo">{{=info.orderState||''}}</div>
-
+                <div class="worksheetStatusInfo">{{=info.ORDER_STATE||''}}</div>
             </div>
         </div>
         <div class="iconStyle">

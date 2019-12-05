@@ -68,34 +68,52 @@ function save() {
     }, function(retBtn, err) {
         if(retBtn.buttonIndex===1){
             common.post({
-                url:config.archiveWorksheetUrl,
+                url: config.GZ_checkWorksheetForArchive ,
                 isLoading: true,
-                text: "提交中...",
                 data:{
-                    wsNum : wsNum,
-                    processId : processId,
-                    remark : remark,
-                    business_recovery : business_recovery,
-                    dispose_way : dispose_way
+                    wsNum:wsNum
                 },
                 success: function (ret) {
-                    if (ret.status==='200'){
+                    if(ret.returnvar === '2'){
                         api.toast({
-                            msg:  '归档操作成功！',
-                            duration: config.duration,
+                            msg: '此工单已归档，请刷新列表!!',
+                            duration: 2000,
                             location: 'middle'
                         });
-                        setTimeout(function(){
-                            common.closeAndReloadAppointPage('process_success_reload_worksheet_detail');
-                        },config.successDuration);
-                    } else {
-                        var msg = '归档操作失败！'
-                        if (ret&&ret.data&&ret.data.message){
-                            msg = ret.data.message
-                        }
-                        api.alert({
-                            title: '提示',
-                            msg: msg,
+                        return;
+                    }else{
+                        common.post({
+                            url:config.archiveWorksheetUrl,
+                            isLoading: true,
+                            text: "提交中...",
+                            data:{
+                                wsNum : wsNum,
+                                processId : processId,
+                                remark : remark,
+                                business_recovery : business_recovery,
+                                dispose_way : dispose_way
+                            },
+                            success: function (ret) {
+                                if (ret.status==='200'){
+                                    api.toast({
+                                        msg:  '归档操作成功！',
+                                        duration: config.duration,
+                                        location: 'middle'
+                                    });
+                                    setTimeout(function(){
+                                        common.closeAndReloadAppointPage('process_success_reload_worksheet_detail');
+                                    },config.successDuration);
+                                } else {
+                                    var msg = '归档操作失败！'
+                                    if (ret&&ret.data&&ret.data.message){
+                                        msg = ret.data.message
+                                    }
+                                    api.alert({
+                                        title: '提示',
+                                        msg: msg,
+                                    });
+                                }
+                            }
                         });
                     }
                 }

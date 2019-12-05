@@ -32,20 +32,9 @@ apiready = function () {
     })
     //监听工单查询跳转到跳转到列表
     api.addEventListener({
-        name: "open_ZT_TaskAllWorksheet_List"
-    }, function () {
-        var data = $api.getStorage(storageKey.Query_Worksheet_List);
-        var params = [];
-        params.list = data.data;
-        for (var i = 0; i < params.list.length; i++) {
-            var info = params.list[i];
-            if (info.wsTitle && info.wsTitle.length > 45) {
-                info.wsTitle = info.wsTitle.substring(0, 45) + "..."
-            }
-        }
-        params.title = '工单查询';
-        var worksheetDetail = doT.template($api.text($api.byId('search-worksheet-detail')));
-        $api.html($api.byId('workSheetDetail'), worksheetDetail(params));
+        name: "open_GZ_AllWorksheet_List"
+    },  function () {
+        getSearchWorkSheetList();
     });
     //监听刷新指定名称页面
     api.addEventListener({
@@ -59,10 +48,14 @@ apiready = function () {
 function refresh() {
     api.refreshHeaderLoadDone(); //复位下拉刷新
     getWaitAndEndCount();
-    if (worksheet==='wait'){
+    if (worksheet === 'wait') {
         getWaitWorkSheetList();
-    } else{
+    } else if (worksheet === 'end') {
         getEndWorkSheetList()
+    } else if (worksheet === 'archive') {
+        getArchiveSheetList()
+    } else if (worksheet === 'worksheet_search') {
+        getSearchWorkSheetList()
     }
 }
 
@@ -80,6 +73,9 @@ function getWaitAndEndCount() {
                 }
                 if (params.end > 99){
                     params.end = '99+'
+                }
+                if (params.archive > 99){
+                    params.archive = '99+'
                 }
             }
             $api.html($api.byId('allProcessCountInfo'), "");
@@ -230,6 +226,66 @@ function getEndWorkSheetList() {
     });
 
 
+}
+function getArchiveSheetList() {
+    worksheet = 'archive'
+    common.post({
+        url: config.archiveWorksheetListListUrl,
+        isLoading: true,
+        success: function (ret) {
+            $api.html($api.byId('workSheetDetail'), "");
+            if (ret.status == '200') {
+                var params = [];
+                params.list = ret.data
+                for (var i = 0; i < params.list.length; i++) {
+                    var info = params.list[i]
+                    if (info.wsTitle && info.wsTitle.length > 45) {
+                        info.wsTitle = info.wsTitle.substring(0, 45) + "..."
+                    }
+                }
+                params.title = '归档工单列表'
+                var worksheetDetail = doT.template($api.text($api.byId('archive-worksheet-detail')));
+                $api.html($api.byId('workSheetDetail'), worksheetDetail(params));
+            }else{
+                api.toast({
+                    msg: '归档工单列表失败！',
+                    duration: config.duration,
+                    location: 'middle'
+                });
+            }
+        }
+    });
+
+
+}
+function getSearchWorkSheetList() {
+
+    worksheet = 'worksheet_search';
+    var data = $api.getStorage(storageKey.Query_Worksheet_List);
+    var params = [];
+    params.list = data.data;
+    for (var i = 0; i < params.list.length; i++) {
+        var info = params.list[i];
+        if (info.ORDER_STATE === '0') {
+            info.ORDER_STATE = '待派发'
+        } else if (info.ORDER_STATE === '1') {
+            info.ORDER_STATE = '处理中'
+        } else if (info.ORDER_STATE === '2') {
+            info.ORDER_STATE = '结单'
+        } else if (info.ORDER_STATE === '3') {
+            info.ORDER_STATE = '归档'
+        } else if (info.ORDER_STATE === '4') {
+            info.ORDER_STATE = '挂起'
+        } else if (info.ORDER_STATE === '5') {
+            info.ORDER_STATE = '撤销'
+        }
+
+    }
+    params.title = '工单查询';
+    var worksheetDetail = doT.template($api.text($api.byId('search-worksheet-detail')));
+    $api.html($api.byId('workSheetDetail'), worksheetDetail(params));
+
+    $api.setStorage(storageKey.process_choose_pageName, "ZT_worksheet_manage");//当前页面名称
 }
 
 function openWorksheetDetail(worksheetNo,processId,worksheetTitle) {

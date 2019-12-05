@@ -98,8 +98,9 @@ function loadWorksheetAndMalfunctionInfo() {
             if (ret.status === '200'){
                 params = ret.data
                 initMenu();
-                //每次刷新工单信息，把工单id存到storage里
+                //每次刷新工单信息，把工单id/专业存到storage里
                 $api.setStorage(storageKey.wsId,  ret.data.wsId);
+                $api.setStorage(storageKey.dmPro,  ret.data.dmPro);
                 $api.html($api.byId('orangeRectangleInfo'), "");
                 var baseInfo = doT.template($api.text($api.byId('base-info')));
                 $api.html($api.byId('orangeRectangleInfo'), baseInfo(params));
@@ -228,7 +229,7 @@ function initMenu() {
                     }else if(key==='追派'){
                         data.imgUrl = 'zhuipai.png';
                         data.pageUrl = 'appendWorkSheet';
-                    }else if(key==='返单'||key==='排除返单'){
+                    }else if(key==='返单'){
                         data.imgUrl = 'fandan.png';
                         data.pageUrl = 'overWorksheet';
                     }else if(key==='确认结单'){
@@ -241,10 +242,10 @@ function initMenu() {
                         data.imgUrl = 'guaqishenqing.png';
                         data.pageUrl = 'suspendApplication';
                     }
-                    // else if(key==='挂起审核'){
-                    //     data.imgUrl = 'guaqishenhe.png';
-                    //     data.pageUrl = 'suspendAudit';
-                    // }
+                    else if(key==='挂起审核'){
+                        data.imgUrl = 'guaqishenhe.png';
+                        data.pageUrl = 'suspendAudit';
+                    }
                     else if(key==='阶段回复'){
                         data.imgUrl = 'jieduanhuifu.png';
                         data.pageUrl = 'stageResponse';
@@ -257,7 +258,11 @@ function initMenu() {
                     }else if(key==='未排除返单'){
                         data.imgUrl = 'fandan.png';
                         data.pageUrl = 'noFeedbackWorksheet';
+                    }else if(key==='排除返单'){
+                        data.imgUrl = 'fandan.png';
+                        data.pageUrl = 'feedbackWorksheet';
                     }
+
 
                     if(data.imgUrl!=null){
                         data.key = key

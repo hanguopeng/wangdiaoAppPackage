@@ -92,7 +92,8 @@ function openMainFrame() {
 function processChoose() {
     var header_h = $api.getStorage("win_header_height");
     var footer_h = $api.getStorage("win_footer_height");
-    common.sendEvent("close_ZTWorksheet_search");//关闭工单查询页面
+    common.sendEvent("close_ZTWorksheet_search");//关闭任务调度工单查询页面
+    common.sendEvent("close_GZWorksheet_search");//关闭故障工单查询页面
     api.openFrame({
         name: 'process_choose',
         url: './process_choose.html',

@@ -114,38 +114,65 @@ function save() {
     }, function(retBtn, err) {
         if(retBtn.buttonIndex===1){
             common.post({
-                url:config.forwardWorksheetUrl,
+                url: config.GZ_checkWorksheetForForward,
                 isLoading: true,
-                text: "提交中...",
                 data:{
-                    wsNum : wsNum,
-                    remark : remark,
-                    paiwangGroupd : paiwangGroupd,
-                    paiwangGroupdType : paiwangGroupdType,
-                    processId : processId,
-                    chuliGroupd : chuliGroupd,
-                    chuliGroupdType : chuliGroupdType,
-                    dispose_way : dispose_way,
-                    imgID : imgID
+                    paiwangGroupd:paiwangGroupd,
+                    paiwangGroupdType:paiwangGroupdType
                 },
                 success: function (ret) {
-                    if (ret.status==='200'){
+                    if(ret.flag1 === 'isNull'){
                         api.toast({
-                            msg:  '转派操作成功！',
-                            duration: config.duration,
+                            msg: '您选择的派发对象：部门【'+ret.dept+'】中，不存在人员,请重新选择并派发！',
+                            duration: 2000,
                             location: 'middle'
                         });
-                        setTimeout(function(){
-                            common.closeAndReloadAppointPage('process_success_reload_worksheet_detail');
-                        },config.successDuration);
-                    } else {
-                        var msg = '转派操作失败！'
-                        if (ret&&ret.data&&ret.data.message){
-                            msg = ret.data.message
-                        }
-                        api.alert({
-                            title: '提示',
-                            msg: msg,
+                        return;
+                    }
+                    if(ret.flag === 'nook'){
+                        api.toast({
+                            msg: '您选择的派发对象：人员【'+ret.user+'】在所选的部门【'+ret.dept+'】中，请重新选择并派发!',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                        return;
+                    }else{
+                        common.post({
+                            url:config.forwardWorksheetUrl,
+                            isLoading: true,
+                            text: "提交中...",
+                            data:{
+                                wsNum : wsNum,
+                                remark : remark,
+                                paiwangGroupd : paiwangGroupd,
+                                paiwangGroupdType : paiwangGroupdType,
+                                processId : processId,
+                                chuliGroupd : chuliGroupd,
+                                chuliGroupdType : chuliGroupdType,
+                                dispose_way : dispose_way,
+                                imgID : imgID
+                            },
+                            success: function (ret) {
+                                if (ret.status==='200'){
+                                    api.toast({
+                                        msg:  '转派操作成功！',
+                                        duration: config.duration,
+                                        location: 'middle'
+                                    });
+                                    setTimeout(function(){
+                                        common.closeAndReloadAppointPage('process_success_reload_worksheet_detail');
+                                    },config.successDuration);
+                                } else {
+                                    var msg = '转派操作失败！'
+                                    if (ret&&ret.data&&ret.data.message){
+                                        msg = ret.data.message
+                                    }
+                                    api.alert({
+                                        title: '提示',
+                                        msg: msg,
+                                    });
+                                }
+                            }
                         });
                     }
                 }

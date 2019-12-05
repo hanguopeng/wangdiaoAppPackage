@@ -3,11 +3,16 @@ apiready = function() {
 }
 //动态加载select
 function initSelect(){
+    var dictId = parentdictid.suspendApplication.other
+    var dmPro = $api.getStorage(storageKey.dmPro);
+    if (!common.isEmpty(dmPro)&&dmPro==='大客户专业'){
+        dictId = parentdictid.suspendApplication.KH
+    }
     common.post({
         url : config.getAllIdUrl,
         isLoading:false,
         data:{
-            parentdictid:parentdictid.suspendApplication,
+            parentdictid:dictId
         },
         success : function(ret){
             if(ret&&ret.status==='200'){
@@ -45,6 +50,7 @@ function save() {
     var remark = $api.trim($api.val($api.byId('remark')));       //挂起原因
     var wsNum = $api.getStorage(storageKey.wsNum);               //工单号
     var processId = $api.getStorage(storageKey.processId);       //流程id
+    var ws_id = $api.getStorage(storageKey.wsId);
     var imgID = "";                                             //图片信息,接口需要传值，但是页面上没有此录入项
     if(common.isEmpty(disposeWay)){
         api.toast({
@@ -55,7 +61,7 @@ function save() {
         return;
     }
     api.confirm({
-        title: '挂起审核',
+        title: '挂起申请',
         msg: '是否提交？',
         buttons: ['确定', '取消']
     }, function(retBtn, err) {
@@ -69,7 +75,8 @@ function save() {
                     processId: processId,
                     remark: remark,
                     imgID: imgID,
-                    dispose_way: disposeWay
+                    dispose_way: disposeWay,
+                    ws_id: ws_id
                 },
                 success: function (ret) {
                     if (ret.status==='200'){
