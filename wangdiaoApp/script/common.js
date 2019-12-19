@@ -122,7 +122,29 @@ var common = {
         api.sendEvent({
             name: eventName,
         })
-    }
+    },
+    'currentTime':function () {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+        var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+        return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";
+    },
 
-
-}
+};
+var enLang = {
+    name  : "en",
+    month : ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+    weeks : [ "一","二","三","四","五","六","日" ],
+    times : ["时","分","秒"],
+    timetxt: ["时间","开始时间","结束时间"],
+    backtxt:"返回",
+    clear : "清空",
+    today : "现在",
+    yes   : "确认",
+    close : "关闭",
+};

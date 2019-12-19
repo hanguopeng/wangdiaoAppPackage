@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>工单处理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/worksheet_manage.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/calendar/jeDate-test.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/calendar/jedate.css"/>
+</head>
+<style>
+    body{
+        background-color: white;
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+
+    .flip-horizontal {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        transform: scaleX(-1);
+       }
+    .flip-vertical {
+        -moz-transform: scaleY(-1);
+        -webkit-transform: scaleY(-1);
+        -o-transform: scaleY(-1);
+        transform: scaleY(-1);
+        }
+</style>
+<body>
+    <div class="workSheet_search_redLine"></div>
+
+    <div style="margin-top: 0.5rem;position: relative;">
+        <div style="text-align: center;position: relative;margin-top: 1.5rem">
+            <div class="workSheet_search_title_img">
+                <img src="../../image/gradual_change_horn.png" class="flip-vertical">
+            </div>
+            <span style="color: #e10010;font-size: 0.7rem;font-weight: bold">工单查询</span>
+            <div class="workSheet_search_title_img">
+                <img src="../../image/gradual_change_horn.png" class="flip-horizontal">
+            </div>
+        </div>
+
+        <div style="position: relative;margin-top: 0rem">
+            <div class="workSheet_search" >
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem;">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right;">
+                        <span class="workSheet_search_item_span">工单流水</span>
+                    </div>
+                    <div class="inline-block" style="width: 40% ; text-align: left">
+                        <input class="aui-list-item-input" id="wsNum" name="" placeholder="请输入">
+                    </div>
+                </div>
+            </div>
+            <div class="workSheet_search">
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right" >
+                        <span class="workSheet_search_item_span">工单主题</span>
+                    </div>
+                    <div class="inline-block" style="width: 40% ; text-align: left">
+                        <input class="aui-list-item-input" id="wsTitle" placeholder="请输入">
+                    </div>
+                </div>
+            </div>
+            <div class="workSheet_search">
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right" >
+                        <span class="workSheet_search_item_span">任务单编号</span>
+                    </div>
+                    <div class="inline-block" style="width: 40% ; text-align: left">
+                        <input class="aui-list-item-input" id="taskOrderNbr" name="" placeholder="请输入">
+                    </div>
+                </div>
+            </div>
+            <div class="workSheet_search">
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
+                        <span class="workSheet_search_item_span">地市</span>
+                    </div>
+                    <div class="inline-block" style="width: 40%; text-align: left">
+                        <select id="selCity" name="city"  onchange="changeArea(this.value)" class="aui-list-item-select" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem">
+                            <option value="">全部</option>
+                            <option value="201">长春</option>
+                            <option value="202">吉林</option>
+                            <option value="203">延边</option>
+                            <option value="204">四平</option>
+                            <option value="205">通化</option>
+                            <option value="206">白城</option>
+                            <option value="207">辽源</option>
+                            <option value="208">松原</option>
+                            <option value="209">白山</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="workSheet_search">
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
+                        <span class="workSheet_search_item_span">区县</span>
+                    </div>
+                    <div class="inline-block" style="width: 40%; text-align: left">
+                        <select onclick="AlertMessage()" class="aui-list-item-select" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem" name="area" id="selArea">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="workSheet_search" >
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem;position: absolute;z-index: 1000">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right" >
+                        <span class="workSheet_search_item_span">任务来源</span>
+                    </div>
+                    <div class="inline-block" style="width: 40% ; text-align: left">
+                        <select class="aui-list-item-select" id="source" style="font-size: 0.5rem;margin-left: 0rem;padding-left: 0rem;z-index: 9999">
+                            <option value="">全部</option>
+                            <option value="1" >宽带微服务</option>
+                            <option value="2" >移网微服务</option>
+                            <option value="3" >网络投诉管控</option>
+                            <option value="4" >网络自动化</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="workSheet_search" >
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem;position: absolute;z-index: 1000">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
+                        <span class="workSheet_search_item_span">开始时间</span>
+                    </div>
+                    <div class="inline-block" style="width: 40% ; text-align: left">
+                        <input class="aui-list-item-input" value="" id="startTime" placeholder="请输入">
+                        <i class="aui-iconfont aui-icon-calendar" style="position: absolute;right: 3.5rem;top: 0.8rem;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="workSheet_search" >
+                <div  class="workSheet_search_item" style="padding-top: 0.55rem;position: absolute;z-index: 1000">
+                    <div class="inline-block aui-searchbar-input aui-border-radius" style="width: 35%;text-align: right">
+                        <span class="workSheet_search_item_span">结束时间</span>
+                    </div>
+                    <div class="inline-block" style="width: 40% ; text-align: left">
+                        <input class="aui-list-item-input" value="" id="endTime" placeholder="请输入" >
+                        <i class="aui-iconfont aui-icon-calendar" style="position: absolute;right: 3.5rem;top: 0.8rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img style="width:150px;height:150px;position:absolute;right:0;bottom:0rem;z-index: 10" src="../../image/liantong_dark_fringe.png">
+        <div class="aui-bar-btn" style="position: relative;top:2rem ;">
+            <div class="workSheet_search_btn" onclick="save()"><span style="color: #e10010">完成</span></div>
+            <div class="workSheet_search_btn" onclick="closeFrame()">取消</div>
+        </div>
+    </div>
+    <script id="area" type="text/template">
+        <option value="" selected >全部</option>
+        {{
+        for(var i=0;i<it.length;i++){
+        var item = it[i];
+        }}
+        <option value="{{=item.AREAID}}">{{=item.AREANAME}}</option>
+        {{
+        }
+        }}
+    </script>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/calendar.js"></script>
+<script type="text/javascript" src="../../script/taskScheduling/ZT_worksheet_search.js"></script>
+</body>
+</html>

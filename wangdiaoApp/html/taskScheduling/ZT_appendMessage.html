@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>信息追加</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+
+    <style>
+        .aui-bar-nav{
+            background-color: #e10010;
+        }
+        .aui-icon-left{
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+<div class="bodyContainer bodyPosition">
+    <header class="aui-bar aui-bar-nav headerMarginTop">
+        <div class="aui-pull-left aui-btn">
+            <span class="aui-iconfont aui-icon-left"></span><span class="aui-Font" onclick="api.closeWin()">返回</span>
+        </div>
+        <div class="aui-title">信息追加</div>
+        <div class="aui-pull-right header_confirm">
+            <span class="aui_Font" onclick="save()">确定</span>
+        </div>
+    </header>
+    <div class="infoMarginTop">
+        <div id="workSheet_area" class="aui-padded-l-15">
+            <!--追加内容-->
+            <div>
+                <div>
+                    <span class="redStar">*</span>
+                    追加内容：
+                </div>
+                <div>
+                    <textarea  placeholder="请输入" id="appendMessage"></textarea>
+                </div>
+            </div>
+            <!--任务描述-->
+            <div style="margin-top:0.3rem;margin-bottom: 0.5rem">
+                <div>
+                    <span class="whiteStar">*</span>
+                    任务描述：
+                </div>
+                <div>
+                    <textarea  placeholder="请输入" id="taskDesc"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/taskScheduling/ZT_appendMessage.js"></script>
+</body>
+</html>

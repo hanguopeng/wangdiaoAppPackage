@@ -47,64 +47,11 @@
     </div>
 </div>
 
-<script>
-    apiready = function () {
-    }
-    function save() {
-        var remark = $api.trim($api.val($api.byId('appendMessage')));       //追加内容
-        var wsNum = $api.getStorage(storageKey.wsNum);       //工单号
-        var processId = $api.getStorage(storageKey.processId);     //流程id
-        var imgID = "";     //图片信息
-        if(common.isEmpty(remark)){
-            api.toast({
-                msg: '追加信息不能为空！',
-                duration: config.duration,
-                location: 'middle'
-            });
-            return;
-        }
-        api.confirm({
-            title: '信息追加',
-            msg: '是否提交？',
-            buttons: ['确定', '取消']
-        }, function(retBtn, err) {
-            if(retBtn.buttonIndex===1){
-                common.post({
-                    url:config.appendMessageUrl,
-                    isLoading: true,
-                    text: "提交中...",
-                    data:{
-                        wsNum:wsNum,
-                        processId:processId,
-                        remark: remark,
-                        imgID:imgID
-                    },
-                    success: function (ret) {
-                        if (ret.status==='200'){
-                            api.alert({
-                                title: '提示',
-                                msg: '信息追加操作成功！',
-                            }, function (ret, err) {
-                                common.closeAndReloadAppointPage('process_success_reload_worksheet_detail');
-                            });
-                        } else {
-                            // 因为返回的错误信息是英文，所有没有单独显示错误信息。
-                            api.toast({
-                                msg:  '信息追加操作失败！',
-                                duration: config.duration,
-                                location: 'middle'
-                            });
-                        }
-                    }
-                });
-            }
-        });
-    }
 
-</script>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/config.js"></script>
 <script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/malfunction/appendMessage.js"></script>
 </body>
 </html>

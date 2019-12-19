@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+            "maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>工单处理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/malfunction/worksheet_detail.css"/>
+</head>
+<body style="background-color: #f5f5f5 !important;position: relative">
+<header id="header" class="aui-bar aui-bar-nav headerMarginTop"
+        style="background-color: #e9e9e9; color: #535353;position: fixed;font-weight: 700">
+    <div class="aui-pull-left aui-btn" onclick="common.closeAndReloadAppointPage('reload_worksheet_manage')">
+        <span class="aui-iconfont aui-icon-left" style="color: #535353 !important;font-weight: 800"></span>返回
+    </div>
+    <div class="aui-title">工单详情</div>
+    <div class="aui-pull-right" style="margin-top:0.6rem;margin-right:0.3rem;width: 11%;height:11%;">
+        <img src="../../image/three_lines.png" onclick="showMenu()">
+    </div>
+    <div class="activityMenu" id="activityMenu" style="display:none;">
+    </div>
+</header>
+<div id="baseInfo" class="bodyMarginTop">
+    <div class="redLine"></div>
+    <div id="orangeRectangleInfo" class="orangeRectangleInfo" onclick="pageDispose()">
+    </div>
+    <div class="tab" id="tab" style="margin-top: 0.3rem">
+        <div class="tab-item" id="tab-worksheet-info" data-to="worksheet-info" onclick="changeTab(this);">工单信息</div>
+        <div class="tab-item tab-active" id="tab-flow-info" data-to="flow-info" onclick="changeTab(this);">流转信息</div>
+    </div>
+    <div id="workSheetDetail" style="position:relative;background-color: white;margin-bottom: 2.8rem">
+    </div>
+</div>
+
+<footer class="aui-bar aui-bar-tab" id="footer" style="background-color: #e7e7e7; color: #292929">
+    <img style="width:150px;height:150px;position:absolute;right:0;bottom:2.5rem;"
+         src="../../image/liantong_dark_fringe.png">
+    <div class="redLine"></div>
+    <div style="background-color: white">
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage('win_worksheet_manage')">
+            <img class="aui-iconfont" style="margin-left: 40%" src="../../image/gongdanchuli_orange_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem;color: #ff6600">工单处理</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage(null)">
+            <img class="aui-iconfont" style="margin-left: 38%" src="../../image/gailanshitu_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem">概览视图</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage(null)">
+            <img class="aui-iconfont" style="margin-left: 37.5%" src="../../image/peizhiguanli_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem">配置管理</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode onclick="openAppointPage('person_center')">
+            <img class="aui-iconfont" style="margin-left: 39%" src="../../image/wode_icon.png">
+            <div class="aui-bar-tab-label" style="margin-top: 0.1rem">我的</div>
+        </div>
+    </div>
+</footer>
+</body>
+<script id="base-info" type="text/template">
+    <div>
+        <div style="padding-top: 0.2rem">
+            <div class="baseInfoTitle">工单编号：</div>
+            <div style="display: inline-block">{{=it.worksheet.wsNum}}</div>
+        </div>
+        <div style="padding-bottom: 0.2rem">
+            <div class="baseInfoTitle">工单主题：</div>
+            <div class="baseInfoName">{{=it.worksheet.wsTitle}}</div>
+        </div>
+    </div>
+</script>
+<script id="worksheet-info" type="text/template">
+    <div style="margin-top: 0.5rem">
+        <div class="infoLeft">任务单编号</div>
+        <div class="infoRight">{{=it.worksheet.taskOrderNbr||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">工单状态</div>
+        <div class="infoRight">{{=it.worksheet.orderState||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单人</div>
+        <div class="infoRight">{{=it.worksheet.sendUserName||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单部门</div>
+        <div class="infoRight">{{=it.worksheet.sendDeptName||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单人联系方式</div>
+        <div class="infoRight">{{=it.worksheet.phoneNumber||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单人邮箱</div>
+        <div class="infoRight">{{=it.worksheet.sendUserEmail||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">建单时间</div>
+        <div class="infoRight">{{=it.wsCreatDate||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">要求归档时间</div>
+        <div class="infoRight">{{=it.worksheet.requestTime||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理预警时间</div>
+        <div class="infoRight">{{=it.worksheet.warningTime||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">任务来源</div>
+        <div class="infoRight">{{=it.worksheet.taskFrom||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">任务对象类型</div>
+        <div class="infoRight">{{=it.worksheet.taskType||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">处理历时</div>
+        <div class="infoRight">{{=it.clls||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">任务对象编号</div>
+        <div class="infoRight">{{=it.worksheet.taskCode||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">任务对象名称</div>
+        <div class="infoRight">{{=it.worksheet.taskName||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+    <div>
+        <div class="infoLeft">任务描述</div>
+        <div class="infoRight">{{=it.worksheet.taskDesc||''}}</div>
+        <div class="greyLine" style="margin-top: 0.1rem"></div>
+    </div>
+</script>
+<script id="flow-info" type="text/template">
+    {{?it}}
+    {{for(var index=it.length; index>0; index--){
+    var info = it[index-1];
+    }}
+    <div class="flowInfo" onclick="showFlowDetail('{{=index}}','{{=info[2]}}')">
+        {{?index==1}}
+        <div class="flowInfoLeft">
+            <div class="orangeCircle"></div>
+            <div class="line" style="bottom: 0.5rem"></div>
+        </div>
+        <div class="flowInfoRight" style="margin-bottom: 0.5rem">
+            {{??}}
+            <div class="flowInfoLeft">
+                <div class="orangeCircle"></div>
+                <div class="line"></div>
+            </div>
+            <div class="flowInfoRight">
+                {{?}}
+                <div>
+                    <div style="font-weight: 700">{{=info[2]||''}}</div>
+                </div>
+                <div>
+                    <div>{{=info[6]||''}}</div>
+                </div>
+                <div style="color: #9a9a9a">
+                    <div>{{=info[87]||''}}
+                        {{?info[88]}}
+                        ({{=info[88]||''}})
+                        {{?}}
+                    </div>
+                </div>
+                <div style="color: #9a9a9a">
+                    <div>处理人联系方式：{{=info[7]||''}}</div>
+                </div>
+                <div style="color: #9a9a9a">
+                    <div>
+                        {{=info[1]||''}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{}}}
+        {{?}}
+</script>
+<script id="menu-info" type="text/template">
+    {{?it&&it.length>0}}
+    <div class="triangle"></div>
+    <div class="blackBox">
+        {{~it:info:index}}
+        <div onclick="openProcessWin('{{=info.pageUrl}}')">
+            <div class="menuIconDiv">
+                <img src="../../image/{{=info.imgUrl}}" class="menuIcon">
+            </div>
+            <div class="menuName">{{=info.key}}</div>
+            {{?index==(it.length-1)}}
+            <div class="menuLine" style="margin-bottom: 0.5rem"></div>
+            {{??}}
+            <div class="menuLine"></div>
+            {{?}}
+        </div>
+        {{~}}
+    </div>
+    {{?}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/config.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/taskScheduling/ZT_worksheet_detail.js"></script>
+</html>
