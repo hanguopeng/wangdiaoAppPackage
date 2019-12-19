@@ -46,6 +46,23 @@
         <div class="aui-title">挂起审核</div>
     </header>
     <div id="workSheet_area" class="aui-padded-l-15">
+        <div class="workSheet_Choose_div">
+            <div  class="workSheet_Choose_div_sp">
+                <div class="inline-block" style="width: 37%;">
+                    <span class="redStar">*</span>
+                    挂起申请对象：
+                </div>
+                <div class="inline-block" style="width: 43%;">
+                    <select  id="suspendAuditModel" onchange="loadingTypeAndReason()">
+                        <option value='' disabled selected style='display:none;'>请选择</option>
+                    </select>
+                </div>
+                <div class="inline-block lianTong-icon-down" >
+                    <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
+                </div>
+            </div>
+            <div class="greyLine96"></div>
+        </div>
         <!--挂起类型-->
         <div class="workSheet_Choose_div">
             <div  class="workSheet_Choose_div_sp" style="margin-top: 0.55rem">
@@ -54,7 +71,7 @@
                     挂起类型：
                 </div>
                 <div class="inline-block" style="width: 50%;">
-                    <input id="disposeWay" readonly>
+                    <input id="suspendType" readonly>
                 </div>
             </div>
             <div class="greyLine96" style="margin-top: -0.2rem"></div>
@@ -66,7 +83,7 @@
                 挂起原因：
             </div>
             <div>
-                <textarea  id="remark" readonly></textarea>
+                <textarea style="height: 200px" id="suspendReason" readonly></textarea>
             </div>
         </div>
         <!--批复意见-->
@@ -76,17 +93,7 @@
                 批复意见：
             </div>
             <div>
-                <textarea  id="column5" readonly></textarea>
-            </div>
-        </div>
-        <!--意见-->
-        <div style="margin-top: 0.5rem">
-            <div>
-                <span class="redStar">*</span>
-                意见：
-            </div>
-            <div>
-                <textarea placeholder="请输入" id="gqopinion"></textarea>
+                <textarea style="height: 200px" placeholder="请输入" id="pfyj"></textarea>
             </div>
         </div>
     </div>
@@ -95,11 +102,122 @@
             <button onclick="save(this)" class="agree-btn" data-to="2" value="2" >不同意</button>
     </div>
 </div>
-<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
+<script id="suspend-audit-model" type="text/template">
+    <option value=""  disabled selected style="font-size: 0.5rem">请选择</option>
+    {{?it&&it.list.length>0}}
+    {{ for(var i=0;i<it.list.length;i++){
+    }}
+    <option value="{{=it.list[i][5]||''}}" style="font-size: 0.5rem" >
+        反馈人：{{=it.list[i][1]||''}}
+        反馈部门：{{=it.list[i][3]||''}}
+        反馈时间：{{=it.list[i][4]||''}}
+    </option>
+    {{
+    }
+    }}
+    {{?}}
+</script>
+<script>
+    // TODO 暂停使用
+    apiready = function() {
+        initSelect();
+    }
+    //动态加载挂起申请对象
+    function initSelect(){
+        var wsNum = $api.getStorage(storageKey.wsNum);
+        var processId = $api.getStorage(storageKey.processId);
+        common.post({
+            url : config.getSuspendAuditModelUrl + "&wsNum=" + wsNum + "&processId=" + processId ,
+            isLoading:false,
+            success : function(ret){
+                if(ret&&ret.status==='200'){
+                    //填写信息
+                    if (ret.data&&ret.data.result) {
+                        var data = ret.data.result;
+                        var params = {list:[]}
+                        if (data.indexOf(";")!=-1){
+                            var list = data.split(";");
+                            for (var i=0; i<list.length;i++){
+                                if (list[i].length>0){
+                                    params.list.push(list[i].split(","))
+                                }
+                            }
+                        }
+                        $api.html($api.byId('suspendAuditModel'), "");
+                        var suspendAuditModel = doT.template($api.text($api.byId('suspend-audit-model')));
+                        $api.html($api.byId('suspendAuditModel'), suspendAuditModel(params));
+                    }
+                }else {
+                    api.toast({
+                        msg: '获取挂起申请对象失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        });
+    }
+    function save(obj) {
+        var check_result
+        var dataTo = $api.attr(obj, 'data-to');
+        if (dataTo == "1") {//同意
+             check_result = 1;                //批复类型
+        } else {
+             check_result = 2;                //批复类型
+        }
+        var column5 = $api.trim($api.val($api.byId('pfyj')));               //批复意见
+        var remark = $api.trim($api.val($api.byId('gqyy')));                //挂起原因
+        var dispose_way = $("#gqlx-sel option:selected").val();             //挂起类型
+        var wsNum = $api.getStorage(storageKey.wsNum);                      //工单号
+        var processId = $api.getStorage(storageKey.processId);              //流程id
+        if(common.isEmpty(dispose_way)){
+            api.toast({
+                msg: '请选择挂起类型！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        common.post({
+            url:config.suspendAuditUrl + "&wsNum=" + wsNum + "&processId=" + processId + "&remark=" + remark + "&dispose_way=" + dispose_way +"&column5=" + column5
+                + "&check_result=" + check_result,
+            isLoading: false,
+            text: "提交中...",
+            success: function (ret) {
+                if (ret.status==='200'){
+                    api.alert({
+                        title: '提示',
+                        msg: '挂起审核操作成功！',
+                    }, function (ret, err) {
+                        common.closeAndReloadAppointPage('process_success_reload_worksheet_detail');
+                    });
+                } else {
+                    // 因为返回的错误信息是英文，所有没有单独显示错误信息。
+                    api.toast({
+                        msg:  '提交失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        });
+    }
+    function loadingTypeAndReason() {
+        var wsNum = $api.getStorage(storageKey.wsNum);
+        var processId = $api.getStorage(storageKey.processId);
+        common.post({
+            url : config.suspendAuditModelEchoUrl + "&wsNum=" + wsNum + "&processId=" + processId ,
+            isLoading:false,
+            success : function(ret){
+
+            }
+        });
+    }
+</script>
+<script type="text/javascript" src="../../script/malfunction/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/doT.min.js"></script>
 <script type="text/javascript" src="../../script/config.js"></script>
 <script type="text/javascript" src="../../script/common.js"></script>
-<script type="text/javascript" src="../../script/malfunction/suspendAudit.js"></script>
 </body>
 </html>

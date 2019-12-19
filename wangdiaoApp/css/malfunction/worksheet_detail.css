@@ -12,32 +12,29 @@
 }
 
 .orangeRectangleInfo {
-    position: relative;
-    top: 0.2rem;
-    margin-left: 4%;
-    font-size: 0.7rem;
+    position: absolute;
+    top: 1rem;
+    margin-left: 10%;
+    font-size: 0.6rem;
     color: white;
-    width: 92%;
-    border-radius:5px;
-    background: linear-gradient(to right,#ff9933,#ff6633);
 }
 
 .baseInfoTitle {
     display: inline-block;
     height: 100%;
-    margin-left: 1rem;
-    width: 4rem;
+    width: 3rem;
     vertical-align: top;
     font-weight: 700;
 }
 
 .baseInfoName {
-    width: 63%;
+    width: 65%;
     display: inline-block;
     vertical-align: top;
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
+    height: 3.3rem;
 }
 
 /*tab切换类*/
@@ -76,6 +73,7 @@
     margin-left: 8.8%;
     font-size: 0.7rem;
     width: 32%;
+
     display: inline-block;
     vertical-align: top;
     margin-top: 0.2rem;
@@ -93,14 +91,6 @@
     text-align: right;
 }
 
-.flowInfo {
-    position: relative;
-    margin-top: 0.5rem;
-    height: auto;
-    width: 90%;
-    font-size: 0.7rem;
-}
-
 .flowInfoLeft {
     position: absolute;
     width: auto;
@@ -109,13 +99,6 @@
     margin-top: 0.2rem;
     margin-left: 0.1rem;
     left: 8%;
-}
-
-.flowInfoRight {
-    margin-top: 0.7rem;
-    margin-left: 4rem;
-    height: auto;
-    display: inline-block;
 }
 
 .orangeCircle {

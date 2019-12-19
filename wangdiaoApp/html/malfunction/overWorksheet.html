@@ -8,8 +8,7 @@
     <title>返单</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <link rel="stylesheet" type="text/css" href="../../css/rams.css"/>
-    <link rel="stylesheet" type="text/css" href="../../css/calendar/jeDate-test.css"/>
-    <link rel="stylesheet" type="text/css" href="../../css/calendar/jedate.css"/>
+
     <style>
         .aui-bar-nav{
             background-color: #e10010;
@@ -17,9 +16,6 @@
         .aui-icon-left{
             font-size: 0.7rem;
             font-weight: 700;
-        }
-        body{
-            font-size: 0.8rem;
         }
 
     </style>
@@ -40,73 +36,40 @@
         <div id="workSheet_area" class="aui-padded-l-15">
             <!--是否本部门故障-->
             <div class="workSheet_Choose_div">
-                <div class="workSheet_Choose_div_sp">
-                    <div class="inline-block">
+                <div  class="workSheet_Choose_div_sp">
+                    <div class="inline-block" style="width: 80%;">
                         <div class="inline-block">
                             <span class="redStar">*</span>
                             是否本部门故障：
                         </div>
-                        <div class="inline-block" style="width:9rem">
+                        <div class="inline-block">
                             <select id="bbmgz-sel" onchange="changeStar()">
+                                <option value='' selected style='display:none;'>请选择</option>
                             </select>
-                            <div class="inline-block lianTong-icon-down">
-                                <span class="aui-iconfont aui-icon-down rams-float-right"></span>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="greyLine96"></div>
-            </div>
-            <!--故障专业-->
-            <div class="workSheet_Choose_div">
-                <div class="workSheet_Choose_div_sp">
-                    <div class="inline-block">
-                        <div class="inline-block">
-                            <span class="redStar">*</span>
-                            故障专业：
-                        </div>
-                        <div class="inline-block" style="width:12rem">
-                            <select id="gzzy-sel" onchange="changeKeyword()">
-                            </select>
-                            <div class="inline-block lianTong-icon-down">
-                                <span class="aui-iconfont aui-icon-down rams-float-right"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="greyLine96"></div>
-            </div>
-            <!--故障原因关键字-->
-            <div class="workSheet_Choose_div">
-                <div class="workSheet_Choose_div_sp">
-                    <div class="inline-block" style="width: 95%;">
-                        <div class="inline-block">
-                            <span class="redStar">*</span>
-                            故障原因关键字：
-                        </div>
-                        <div class="inline-block">
-                            <select id="gzyygjz-sel">
-                            </select>
-                        </div>
+                    <div  class="inline-block lianTong-icon-down" >
+                        <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
                     </div>
                 </div>
                 <div class="greyLine96"></div>
             </div>
             <!--故障区域-->
             <div class="workSheet_Choose_div">
-                <div class="workSheet_Choose_div_sp">
-                    <div class="inline-block">
+                <div  class="workSheet_Choose_div_sp">
+                    <div class="inline-block" style="width: 80%;">
                         <div class="inline-block">
-                            <span class="redStar" name="star">*</span>
+                            <span class="redStar" name = "star">*</span>
                             故障区域：
                         </div>
-                        <div class="inline-block" style="width:12rem">
+                        <div class="inline-block">
                             <select id="gzqy-sel">
+                                <option value='' selected style='display:none;'>请选择</option>
                             </select>
-                            <div class="inline-block lianTong-icon-down">
-                                <span class="aui-iconfont aui-icon-down rams-float-right"></span>
-                            </div>
                         </div>
+                    </div>
+                    <div  class="inline-block lianTong-icon-down" >
+                        <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
                     </div>
                 </div>
                 <div class="greyLine96"></div>
@@ -114,38 +77,56 @@
             <!--超时原因-->
             <div class="infoMarginTop aui-hide" id="csyy">
                 <div>
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     超时原因：
                 </div>
                 <div>
-                    <textarea placeholder="请输入" id="csyy_area"></textarea>
+                    <textarea  placeholder="请输入" id="csyy_area"></textarea>
                 </div>
             </div>
             <!--故障原因-->
             <div class="infoMarginTop">
                 <div>
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar"  name = "star">*</span>
                     故障原因：
                 </div>
                 <div>
-                    <textarea placeholder="请输入" id="gzyy_area"></textarea>
+                    <textarea  placeholder="请输入" id="gzyy_area"></textarea>
                 </div>
+            </div>
+            <!--故障原因关键字-->
+            <div class="workSheet_Choose_div">
+                <div  class="workSheet_Choose_div_sp">
+                    <div class="inline-block" style="width: 95%;">
+                        <div class="inline-block">
+                            <span class="redStar">*</span>
+                            故障原因关键字：
+                        </div>
+                        <div class="inline-block">
+                            <select id="gzyygjz-sel">
+                                <option value='' selected style='display:none;'>请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="greyLine96"></div>
             </div>
             <!--是否影响业务-->
             <div class="workSheet_Choose_div">
-                <div class="workSheet_Choose_div_sp">
-                    <div class="inline-block">
+                <div  class="workSheet_Choose_div_sp">
+                    <div  class="inline-block" style="width: 80%;">
                         <div class="inline-block">
-                            <span class="redStar" name="star">*</span>
+                            <span class="redStar" name = "star">*</span>
                             是否影响业务：
                         </div>
-                        <div class="inline-block"  style="width:10rem">
+                        <div class="inline-block">
                             <select id="yxyw-sel" onchange="changeStar()">
+                                <option value='' selected style='display:none;'>请选择</option>
                             </select>
-                            <div class="inline-block lianTong-icon-down">
-                                <span class="aui-iconfont aui-icon-down rams-float-right"></span>
-                            </div>
                         </div>
+                    </div>
+                    <div  class="inline-block lianTong-icon-down" >
+                        <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
                     </div>
                 </div>
                 <div class="greyLine96"></div>
@@ -157,13 +138,13 @@
                     影响范围：
                 </div>
                 <div>
-                    <textarea placeholder="请输入" id="yxfw_area"></textarea>
+                    <textarea  placeholder="请输入" id="yxfw_area"></textarea>
                 </div>
             </div>
             <!--处理总历时-->
-            <div class="workSheet_Choose_div">
+            <div class="workSheet_Choose_div" >
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     处理总历时：
                     <div class="inline-block" style="width: 50%;">
                         <input id="clls_input" type="text" value="" tabindex="0" readonly>
@@ -172,9 +153,9 @@
                 <div class="greyLine96"></div>
             </div>
             <!--挂起历时-->
-            <div class="workSheet_Choose_div">
+            <div class="workSheet_Choose_div" >
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     挂起历时：
                     <div class="inline-block" style="width: 50%;">
                         <input id="gqls_input" type="text" value="" tabindex="0" readonly>
@@ -183,9 +164,9 @@
                 <div class="greyLine96"></div>
             </div>
             <!--故障开启时间-->
-            <div class="workSheet_Choose_div">
+            <div class="workSheet_Choose_div" >
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     故障开启时间：
                     <div class="inline-block" style="width: 50%;">
                         <input id="gzkqsj_input" type="text" value="" tabindex="0" readonly>
@@ -194,12 +175,12 @@
                 <div class="greyLine96"></div>
             </div>
             <!--业务恢复时间-->
-            <div class="workSheet_Choose_div">
+            <div class="workSheet_Choose_div" >
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     业务恢复时间：
                     <div class="inline-block" style="width: 50%;">
-                        <input id="ywhfsj_input" type="text" value="" tabindex="0" >
+                        <input id="ywhfsj_input" type="text" value="" tabindex="0" onclick="picker('ywhfsj_input')">
                     </div>
                 </div>
                 <div class="greyLine96"></div>
@@ -207,7 +188,7 @@
             <!--处理是否超时-->
             <div class="workSheet_Choose_div">
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     处理是否超时：
                     <div class="inline-block" style="width: 50%;">
                         <input id="clsfcs_sel" type="text" value="" tabindex="0" readonly>
@@ -218,7 +199,7 @@
             <!--返单时间-->
             <div class="workSheet_Choose_div">
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     返单时间：
                     <div class="inline-block" style="width: 50%;">
                         <input id="fdsj_input" type="text" value="" tabindex="0" readonly>
@@ -229,10 +210,10 @@
             <!--派发时间-->
             <div class="workSheet_Choose_div">
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     派发时间：
                     <div class="inline-block" style="width: 50%;">
-                        <input id="pfsj_input" type="text" value="" tabindex="0" readonly>
+                        <input id="pfsj_input" type="text" value="" tabindex="0"  readonly>
                     </div>
                 </div>
                 <div class="greyLine96"></div>
@@ -240,7 +221,7 @@
             <!--故障历时-->
             <div class="workSheet_Choose_div">
                 <div class="workSheet_Choose_div_sp">
-                    <span class="redStar" name="star">*</span>
+                    <span class="redStar" name = "star">*</span>
                     故障历时：
                     <div class="inline-block" style="width: 50%;">
                         <input id="gzls_input" type="text" value="" tabindex="0" readonly>
@@ -248,40 +229,22 @@
                 </div>
                 <div class="greyLine96"></div>
             </div>
-            <!--是否业务全阻-->
-            <div class="workSheet_Choose_div aui-hide" id="sfywqz">
-                <div class="workSheet_Choose_div_sp">
-                    <div class="inline-block">
+            <!--故障专业-->
+            <div class="workSheet_Choose_div">
+                <div  class="workSheet_Choose_div_sp">
+                    <div  class="inline-block" style="width: 80%;">
                         <div class="inline-block">
-                            <span class="redStar" name="star">*</span>
-                            是否业务全阻：
+                            <span class="redStar" name = "star">*</span>
+                            故障专业：
                         </div>
-                        <div class="inline-block"  style="width:10rem">
-                            <select id="sfywqz_sel">
+                        <div class="inline-block">
+                            <select id="gzzy-sel">
+                                <option value='' selected style='display:none;'>请选择</option>
                             </select>
-                            <div class="inline-block lianTong-icon-down">
-                                <span class="aui-iconfont aui-icon-down rams-float-right"></span>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="greyLine96"></div>
-            </div>
-            <!--位置-->
-            <div class="workSheet_Choose_div aui-hide" id="wz">
-                <div class="workSheet_Choose_div_sp">
-                    <div class="inline-block">
-                        <div class="inline-block">
-                            <span class="redStar" name="star">*</span>
-                            位置：
-                        </div>
-                        <div class="inline-block"  style="width:10rem">
-                            <select id="wz_sel">
-                            </select>
-                            <div class="inline-block lianTong-icon-down">
-                                <span class="aui-iconfont aui-icon-down rams-float-right"></span>
-                            </div>
-                        </div>
+                    <div  class="inline-block lianTong-icon-down" >
+                        <span class="aui-iconfont aui-icon-down rams-float-right" ></span>
                     </div>
                 </div>
                 <div class="greyLine96"></div>
@@ -293,7 +256,7 @@
                     处理过程描述：
                 </div>
                 <div>
-                    <textarea placeholder="请输入" id="clgcms_area"></textarea>
+                    <textarea  placeholder="请输入" id="clgcms_area"></textarea>
                 </div>
             </div>
             <!--路由信息-->
@@ -302,19 +265,17 @@
                     <span class="redStar">*</span>
                     路由信息：
                     <div class="inline-block" style="width:50%;">
-                        <input id="lyxx_input" type="text" value="" tabindex="0" placeholder="请输入">
+                        <input id="lyxx_input" type="text" value="" tabindex="0"   placeholder="请输入">
                     </div>
                 </div>
                 <div class="greyLine96" style="margin-bottom: 0.3rem"></div>
             </div>
         </div>
     </div>
-</div>
 
 <script id="bbmgz-selector" type="text/template">
-    <option value="" selected>请选择</option>
-    {{ for(var i=0;i
-    <it.nameList.length;i++){
+    <option value=""  selected >请选择</option>
+    {{ for(var i=0;i<it.nameList.length;i++){
     if(!common.isEmpty(it.nameList[i])){
     }}
     {{?it.nameList[i]==='是'}}
@@ -328,9 +289,8 @@
     }}
 </script>
 <script id="type-selector" type="text/template">
-    <option value="" selected>请选择</option>
-    {{ for(var i=0;i
-    <it.nameList.length;i++){
+    <option value=""  selected >请选择</option>
+    {{ for(var i=0;i<it.nameList.length;i++){
     if(!common.isEmpty(it.nameList[i])){
     }}
     <option value="{{=it.idList[i]}}">{{=it.nameList[i]}}</option>
@@ -340,32 +300,34 @@
     }}
 </script>
 <script id="yxyw-selector" type="text/template">
-    <option value="" selected>请选择</option>
-    {{ for(var i=0;i
-    <it.nameList.length;i++){
+        <option value="" selected >请选择</option>
+        {{ for(var i=0;i<it.nameList.length;i++){
+        if(!common.isEmpty(it.nameList[i])){
+        }}
+        {{?it.nameList[i]==='是'}}
+        <option value="{{=it.idList[i]}}" selected>{{=it.nameList[i]}}</option>
+        {{??}}
+        <option value="{{=it.idList[i]}}">{{=it.nameList[i]}}</option>
+        {{?}}
+        {{
+        }
+        }
+        }}
+    </script>
+<script id="gjz-selector" type="text/template">
+    <option value="" selected >请选择</option>
+    {{ for(var i=0;i<it.nameList.length;i++){
     if(!common.isEmpty(it.nameList[i])){
     }}
-    {{?it.nameList[i]==='是'}}
-    <option value="{{=it.idList[i]}}" selected>{{=it.nameList[i]}}</option>
-    {{??}}
     <option value="{{=it.idList[i]}}">{{=it.nameList[i]}}</option>
-    {{?}}
     {{
     }
-    }
-    }}
-</script>
-<script id="gjz-selector" type="text/template">
-    {{ for(var i=0;i<it.length;i++){
-    }}
-    <option value="{{=it[i].dictId}}">{{=it[i].dictName}}</option>
-    {{
     }
     }}
 </script>
 <script id="gzzy-selector" type="text/template">
-    {{ for(var i=0;i
-    <it.nameList.length;i++){
+    <option value=""  selected >请选择</option>
+    {{ for(var i=0;i<it.nameList.length;i++){
     if(!common.isEmpty(it.nameList[i])){
     }}
     {{?it.idList[i]===it.pro}}
@@ -378,36 +340,556 @@
     }
     }}
 </script>
-<script id="sfywqz-selector" type="text/template">
-    <option value="" selected>请选择</option>
-    {{ for(var i=0;i
-    <it.nameList.length;i++){
-    if(!common.isEmpty(it.nameList[i])){
-    }}
-    <option value="{{=it.idList[i]}}">{{=it.nameList[i]}}</option>
-    {{
+<script>
+    var startTime;
+    var initialPro;
+    apiready = function() {
+        initSelect();
     }
+    //动态加载select
+    function initSelect(){
+        var wsNum = $api.getStorage(storageKey.wsNum);              //工单号
+        var processId = $api.getStorage(storageKey.processId);      //流程id
+        common.post({
+            url:config.getDetailUrl,
+            isLoading:false,
+            data:{
+                wsNum: wsNum,
+                processId: processId
+            },
+            success:function(ret) {
+                if (ret&&ret.status==='200'&&ret.data) {
+                    var data = ret.data;
+                    startTime = data.date2
+                    initialPro = data.pro
+                    $api.val($api.byId('clls_input'), data.date1);//处理总历时
+                    $api.val($api.byId('gqls_input'), data.date6);//挂起历时
+                    $api.val($api.byId('gzkqsj_input'), data.date2);//故障开启时间
+                    $api.val($api.byId('ywhfsj_input'), data.date5);//业务恢复时间
+                    $api.val($api.byId('clsfcs_sel'), data.timeout);//处理是否超时
+                    $api.val($api.byId('fdsj_input'), data.date);//返单时间
+                    $api.val($api.byId('pfsj_input'), data.date3);//派发时间
+                    $api.val($api.byId('gzls_input'), data.date4);//故障历时
+                    if (data.timeout==='是'){    //超时显示超时原因
+                        $api.addCls($api.byId('csyy'),'aui-show')
+                    }
+                    if (data.pro==='1010101'){   //移动专业显示路由信息
+                        $api.addCls($api.byId('lyxx'),'aui-show')
+                    }
+                    ifDeptMalfunction();
+                    malfunctionArea();
+                    malfunctionReasonKeyword(data.pro);
+                    ifInfluenceProfessionalWork();
+                    malfunctionSpecialty(data.pro);
+                }
+            }
+        })
     }
-    }}
+    function changeStar() {
+        var isexclude = $("#bbmgz-sel option:selected").val();                  //是否本部门故障
+        if (isexclude&&isexclude=='1010902') {//选择否
+            //获取
+            var list = document.getElementsByName('star')
+            for(var i = 0, l = list.length; i < l; i++) {
+                var objTemp = list[i];
+                objTemp.style.color = 'white';
+            }
+        } else if (isexclude&&isexclude=='1010901') {//选择是
+            //获取
+            var list = document.getElementsByName('star')
+            for(var i = 0, l = list.length; i < l; i++) {
+                var objTemp = list[i];
+                objTemp.style.color = 'red';
+            }
+        }
+        //获取是否影响业务的值，无论是否本部门故障，如果影响业务为否，业务影响范围都不必填
+        var yxywSel = $("#yxyw-sel option:selected").val();
+        if (yxywSel&&yxywSel==='1011001'){  //影响业务
+            $api.byId('yxfwAreaStar').style.color = 'red'
+        } else if(yxywSel&&yxywSel==='1011002'){  //不影响业务
+            $api.byId('yxfwAreaStar').style.color = 'white'
+        }
+    }
+
+    function save() {
+        var wsNum = $api.getStorage(storageKey.wsNum);              //工单号
+        var processId = $api.getStorage(storageKey.processId);      //流程id
+
+        var isexclude = $("#bbmgz-sel option:selected").val();                  //是否本部门故障
+        if (common.isEmpty(isexclude)) {
+            api.toast({
+                msg: '请选择是否本部门故障！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var isDeptMalfunction = this.isDeptMalfunction(isexclude);   //是否本部门故障
+
+        var area = $("#gzqy-sel option:selected").val();                        //故障区域
+        if (isDeptMalfunction&&common.isEmpty(area)) {
+            api.toast({
+                msg: '请选择故障区域！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var timeout =$api.trim($api.val($api.byId('clsfcs_sel')));               //处理是否超时
+        var timeoutReason = $api.trim($api.val($api.byId('csyy_area')));         //超时原因
+        if (timeout==='是'&&isDeptMalfunction&&common.isEmpty(timeoutReason)) {
+            api.toast({
+                msg: '超时原因不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var reason = $api.trim($api.val($api.byId('gzyy_area')));               //故障原因
+        if (isDeptMalfunction&&common.isEmpty(reason)) {
+            api.toast({
+                msg: '故障原因不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var reasonKey = $("#gzyygjz-sel option:selected").val();                //故障原因关键字
+        if (common.isEmpty(reasonKey)) {
+            api.toast({
+                msg: '请选择故障原因关键字！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var infbus = $("#yxyw-sel option:selected").val();                      //是否影响业务
+        var influence =  $api.trim($api.val($api.byId('yxfw_area')));           //业务影响范围
+        if (isDeptMalfunction&&common.isEmpty(infbus)) {
+            api.toast({
+                msg: '请选择是否影响业务！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }else{
+            if (infbus==='1011001'&&common.isEmpty(influence)) {
+                api.toast({
+                    msg: '影响范围不能为空！',
+                    duration: config.duration,
+                    location: 'middle'
+                });
+                return;
+            }
+        }
+        var deallast = $api.trim($api.val($api.byId('clls_input')));            //处理总历时
+        if (isDeptMalfunction&&common.isEmpty(deallast)) {
+            api.toast({
+                msg: '处理总历时不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var suspendlast =$api.trim($api.val($api.byId('gqls_input')));           //挂起历时
+        if (isDeptMalfunction&&common.isEmpty(suspendlast)) {
+            api.toast({
+                msg: '挂起历时不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var dmhapptime =$api.trim($api.val($api.byId('gzkqsj_input')));          //故障开始时间
+        if (isDeptMalfunction&&common.isEmpty(dmhapptime)) {
+            api.toast({
+                msg: '故障开始时间不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var busrecDate=$api.trim($api.val($api.byId('ywhfsj_input')));           //业务恢复时间
+        if (isDeptMalfunction&&common.isEmpty(busrecDate)) {
+            api.toast({
+                msg: '请选择业务恢复时间！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var dealdate =$api.trim($api.val($api.byId('fdsj_input')));              //返单时间
+        if (isDeptMalfunction&&common.isEmpty(dealdate)) {
+            api.toast({
+                msg: '返单时间不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var rectime = $api.trim($api.val($api.byId('pfsj_input')));;                        //派发时间
+        if (isDeptMalfunction&&common.isEmpty(rectime)) {
+            api.toast({
+                msg: '派发时间不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var dm_pro =$("#gzzy-sel option:selected").val();                        //故障专业
+        if (isDeptMalfunction&&common.isEmpty(dm_pro)) {
+            api.toast({
+                msg: '请选择故障专业！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var remark = $api.trim($api.val($api.byId('clgcms_area')));             //处理过程描述
+        if (common.isEmpty(remark)) {
+            api.toast({
+                msg: '处理过程描述不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var dmdeallast = $api.trim($api.val($api.byId('gzls_input')));           //故障历时
+        if (isDeptMalfunction&&common.isEmpty(dmdeallast)) {
+            api.toast({
+                msg: '故障历时不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var routeinfo =$api.trim($api.val($api.byId('lyxx_input')));              //路由信息
+        if (initialPro==='1010101'&&common.isEmpty(routeinfo)) {
+            api.toast({
+                msg: '路由信息不能为空！',
+                duration: config.duration,
+                location: 'middle'
+            });
+            return;
+        }
+        var imgID = "";                         //图片信息
+        api.confirm({
+            title: '确认返单',
+            msg: '是否提交？',
+            buttons: ['确定', '取消']
+        }, function(retBtn, err) {
+            if(retBtn.buttonIndex===1){
+                common.post({
+                    url : config.overWorksheetUrl,
+                    isLoading: true,
+                    text: "提交中...",
+                    data:{
+                        wsNum: wsNum,
+                        processId: processId,
+                        isexclude: isexclude,
+                        area: area,
+                        reasonKey: reasonKey,
+                        reason: reason,
+                        infbus: infbus,
+                        influence: influence,
+                        deallast: deallast,
+                        suspendlast: suspendlast,
+                        dmhapptime: dmhapptime,
+                        busrecDate: busrecDate,
+                        timeout: timeout,
+                        timeoutReason: timeoutReason,
+                        dealdate: dealdate,
+                        dm_pro: dm_pro,
+                        remark: remark,
+                        imgID: imgID,
+                        dmdeallast: dmdeallast,
+                        rectime: rectime,
+                        routeinfo: routeinfo
+                    },
+                    success: function (ret) {
+                        if (ret.status==='200'){
+                            api.alert({
+                                title: '提示',
+                                msg: '返单操作成功！',
+                            }, function (ret, err) {
+                                common.closeAndReloadAppointPage('process_success_reload_worksheet_detail');
+                            });
+                        } else {
+                            var msg = '返单操作失败！'
+                            if (ret&&ret.data&&ret.data.message){
+                                msg = ret.data.message
+                            }
+                            api.toast({
+                                msg:  msg,
+                                duration: config.duration,
+                                location: 'middle'
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
+    function picker(id){
+        api.openPicker({
+            type: 'date',
+            title: '开始时间'
+        }, function(ret, err){
+            var hYear = ret.year;
+            var hMonth = ret.month;
+            var hDay = ret.day;
+            api.openPicker({
+                type: 'time',
+                title: '开始时间'
+            }, function(ret, err){
+                var hh = ret.hour;
+                var hmin = ret.minute;
+                var hDate = hYear + "-" + (hMonth<10? "0"+hMonth:hMonth) + "-" + (hDay<10?"0"+hDay:hDay) + " " +(hh<10?"0"+hh:hh) + ":" + (hmin<10?"0"+hmin:hmin) + ":00";
+
+                if (id==='ywhfsj_input'){
+                    if (new Date(hDate.replace(/-/g,"/")).getTime()<new Date(startTime.replace(/-/g,"/")).getTime()){
+                        alert('业务恢复时间不能小于故障开始时间')
+                        return ;
+                    }else{
+                        $api.val($api.byId(id),hDate);
+                        calculateGzls(hDate)
+                    }
+                }else{
+                    $api.val($api.byId(id),hDate);
+                }
+            });
+        });
+    }
+    //比较业务恢复时间和故障开启时间的差
+    function calculateGzls(date) {
+        var ywhfTime = new Date(date.replace(/-/g,"/")).getTime();
+        var gzksTime = new Date(startTime.replace(/-/g,"/")).getTime();
+        var timeDifference = ywhfTime-gzksTime;
+        var day = Math.floor(timeDifference / 86400000);
+        timeDifference = timeDifference % 86400000;
+        var hour = Math.floor(timeDifference / 3600000);
+        timeDifference = timeDifference % 3600000;
+        var minute = Math.floor(timeDifference / 60000);
+        timeDifference = timeDifference % 60000;
+        var second =  Math.floor(timeDifference / 1000);
+        var gzls = day+"天"+ hour+"小时"+ minute+"分"+ second + "秒";
+        $api.val($api.byId('gzls_input'),gzls);
+    }
+
+    //是否是本部门故障
+    function ifDeptMalfunction() {
+        common.post({
+            url:config.getAllIdUrl,
+            isLoading:false,
+            data:{
+               parentdictid: parentdictid.overWorksheet_ifDeptMalfunction
+            },
+            success : function(ret){
+                if(ret&&ret.status==='200'){
+                    //填写信息
+                    if (ret.data&&ret.data.name&&ret.data.id&&ret.data.name.length > 0) {
+                        var data = ret.data;
+                        var strName = (data.name).split(",");    //字符分割;
+                        var strId  = (data.id).split(",");    //字符分割;
+                        var params = {
+                            idList:[],
+                            nameList:[]
+                        }
+                        params.idList = strId
+                        params.nameList = strName
+                        $api.html($api.byId('bbmgz-sel'), "");
+                        var disposeWay = doT.template($api.text($api.byId('bbmgz-selector')));
+                        $api.html($api.byId('bbmgz-sel'), disposeWay(params));
+                    }else {
+                        api.alert({
+                            msg:'没有可用的是否本部门故障类型！'
+                        })
+                    }
+                }else{
+                    api.toast({
+                        msg: '获取失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        });
+    }
+
+    //故障区域获取
+    function malfunctionArea() {
+        common.post({
+            url:config.getAllIdUrl,
+            isLoading:false,
+            data:{
+                parentdictid: parentdictid.overWorksheet_malfunctionArea
+            },
+            success : function(ret){
+                if(ret&&ret.status==='200'){
+                    //填写信息
+                    if (ret.data&&ret.data.name&&ret.data.id&&ret.data.name.length > 0) {
+                        var data = ret.data;
+                        var strName = (data.name).split(",");    //字符分割;
+                        var strId  = (data.id).split(",");    //字符分割;
+                        var params = {
+                            idList:[],
+                            nameList:[]
+                        }
+                        params.idList = strId
+                        params.nameList = strName
+                        $api.html($api.byId('gzqy-sel'), "");
+                        var disposeWay = doT.template($api.text($api.byId('type-selector')));
+                        $api.html($api.byId('gzqy-sel'), disposeWay(params));
+                    }else {
+                        api.alert({
+                            msg:'没有可用的故障区域！'
+                        })
+                    }
+                }else{
+                    api.toast({
+                        msg: '获取故障区域失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        });
+    }
+    //故障原因关键字
+    function malfunctionReasonKeyword(pro) {
+        var keyWord = parentdictid.overWorksheet_malfunctionReasonKeyword.other
+        if (pro&&pro==='1010101'){
+            keyWord = parentdictid.overWorksheet_malfunctionReasonKeyword.yiWang
+        }
+        common.post({
+            url:config.getAllIdUrl,
+            isLoading:false,
+            data:{
+                parentdictid: keyWord
+            },
+            success : function(ret){
+                if(ret&&ret.status==='200'){
+                    //填写信息
+                    if (ret.data&&ret.data.name&&ret.data.id&&ret.data.name.length > 0) {
+                        var data = ret.data;
+                        var strName = (data.name).split(",");    //字符分割;
+                        var strId  = (data.id).split(",");    //字符分割;
+                        var params = {
+                            idList:[],
+                            nameList:[]
+                        }
+                        params.idList = strId
+                        params.nameList = strName
+                        $api.html($api.byId('gzyygjz-sel'), "");
+                        var disposeWay = doT.template($api.text($api.byId('gjz-selector')));
+                        $api.html($api.byId('gzyygjz-sel'), disposeWay(params));
+                    }else {
+                        api.alert({
+                            msg:'没有可用的故障原因关键字！'
+                        })
+                    }
+                }else{
+                    api.toast({
+                        msg: '获取故障原因关键字失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        })
+    }
+    //是否影响业务
+    function ifInfluenceProfessionalWork() {
+        common.post({
+            url:config.getAllIdUrl,
+            isLoading:false,
+            data:{
+                parentdictid: parentdictid.overWorksheet_ifInfluenceProfessionalWork
+            },
+            success : function(ret){
+                if(ret&&ret.status==='200'){
+                    //填写信息
+                    if (ret.data&&ret.data.name&&ret.data.id&&ret.data.name.length > 0) {
+                        var data = ret.data;
+                        var strName = (data.name).split(",");    //字符分割;
+                        var strId  = (data.id).split(",");    //字符分割;
+                        var params = {
+                            idList:[],
+                            nameList:[]
+                        }
+                        params.idList = strId
+                        params.nameList = strName
+                        $api.html($api.byId('yxyw-sel'), "");
+                        var disposeWay = doT.template($api.text($api.byId('yxyw-selector')));
+                        $api.html($api.byId('yxyw-sel'), disposeWay(params));
+                    }else {
+                        api.alert({
+                            msg:'没有可用的！'
+                        })
+                    }
+                }else{
+                    api.toast({
+                        msg: '获取失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        });
+    }
+    //故障专业
+    function malfunctionSpecialty(pro) {
+        common.post({
+            url:config.getAllIdUrl,
+            isLoading:false,
+            data:{
+                parentdictid: parentdictid.overWorksheet_malfunctionSpecialty
+            },
+            success : function(ret){
+                if(ret&&ret.status==='200'){
+                    //填写信息
+                    if (ret.data&&ret.data.name&&ret.data.id&&ret.data.name.length > 0) {
+                        var data = ret.data;
+                        var strName = (data.name).split(",");    //字符分割;
+                        var strId  = (data.id).split(",");    //字符分割;
+                        var params = {
+                            idList:[],
+                            nameList:[],
+                            pro:pro
+                        }
+                        params.idList = strId
+                        params.nameList = strName
+                        $api.html($api.byId('gzzy-sel'), "");
+                        var disposeWay = doT.template($api.text($api.byId('gzzy-selector')));
+                        $api.html($api.byId('gzzy-sel'), disposeWay(params));
+                    }else {
+                        api.alert({
+                            msg:'没有可用的故障专业！'
+                        })
+                    }
+                }else{
+                    api.toast({
+                        msg: '获取故障专业失败！',
+                        duration: config.duration,
+                        location: 'middle'
+                    });
+                }
+            }
+        })
+    }
+    
+    function isDeptMalfunction(id) {
+        if (id==='1010902') { //不是本部门故障
+            return false
+        }else{
+            return true
+        }
+    }
 </script>
-<script id="wz-selector" type="text/template">
-    <option value="" selected>请选择</option>
-    {{ for(var i=0;i
-    <it.nameList.length;i++){
-    if(!common.isEmpty(it.nameList[i])){
-    }}
-    <option value="{{=it.idList[i]}}">{{=it.nameList[i]}}</option>
-    {{
-    }
-    }
-    }}
-</script>
-<script type="text/javascript" src="../../script/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript" src="../../script/doT.min.js"></script>
-<script type="text/javascript" src="../../script/config.js"></script>
-<script type="text/javascript" src="../../script/common.js"></script>
-<script type="text/javascript" src="../../script/calendar.js"></script>
-<script type="text/javascript" src="../../script/malfunction/overWorksheet.js"></script>
+    <script type="text/javascript" src="../../script/malfunction/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/doT.min.js"></script>
+    <script type="text/javascript" src="../../script/config.js"></script>
+    <script type="text/javascript" src="../../script/common.js"></script>
 </body>
 </html>

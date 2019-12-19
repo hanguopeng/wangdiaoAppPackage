@@ -181,7 +181,6 @@
                 if (ret.status==='200'){
                     // 清空manage页刷新判断依据
                     $api.setStorage(storageKey.operate_status,'');
-                    $api.setStorage(storageKey.process_choose_pageName, "")
                     $api.setStorage(storageKey.loginUser,ret.data);
                     if (remMe){
                         $api.setStorage(storageKey.loginName,userName);
@@ -235,7 +234,7 @@
             bounces: false,
             slidBackEnabled : false,
             reload:true,
-            url: './html/main/win_worksheet_manage.html',
+            url: './html/worksheet_manage.html',
             vScrollBarEnabled:true,
             hScrollBarEnabled:false
         });
