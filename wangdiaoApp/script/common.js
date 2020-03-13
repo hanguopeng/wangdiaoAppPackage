@@ -87,7 +87,7 @@ var common = {
         api.ajax({
             url: param.url,
             method: 'post',
-            timeout: 30,
+            timeout: 1000,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
