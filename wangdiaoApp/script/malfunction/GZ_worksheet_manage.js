@@ -61,8 +61,9 @@ function refresh() {
 
 
 function getWaitAndEndCount() {
+    var time = this.computationTimeSubAMonth()
     common.post({
-        url: config.waitAndEndWorksheet,
+        url: config.waitAndEndWorksheet+"&dmHapTime="+time,
         isLoading: true,
         success: function (ret) {
             var params = []
@@ -86,8 +87,9 @@ function getWaitAndEndCount() {
 }
 function getWaitWorkSheetList() {
     worksheet='wait'
+    var time = this.computationTimeSubAMonth()
     common.post({
-        url: config.waitWorksheetListUrl,
+        url: config.waitWorksheetListUrl+"&dmHapTime="+time,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('workSheetDetail'), "");
@@ -174,8 +176,9 @@ function getWaitWorkSheetList() {
 }
 function getEndWorkSheetList() {
     worksheet = 'end'
+    var time = this.computationTimeSubAMonth()
     common.post({
-        url: config.endWorksheetListUrl,
+        url: config.endWorksheetListUrl+"&dmHapTime="+time,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('workSheetDetail'), "");
@@ -229,8 +232,9 @@ function getEndWorkSheetList() {
 }
 function getArchiveSheetList() {
     worksheet = 'archive'
+    var time = this.computationTimeSubAMonth()
     common.post({
-        url: config.archiveWorksheetListListUrl,
+        url: config.archiveWorksheetListListUrl+"&dmHapTime="+time,
         isLoading: true,
         success: function (ret) {
             $api.html($api.byId('workSheetDetail'), "");
@@ -312,6 +316,18 @@ function showOrClose(obj) {
         $api.removeCls($api.next(obj), 'aui-hide');
         $api.addCls($api.next(obj), 'aui-show');
     }
+}
+
+function computationTimeSubAMonth(){
+    var date=new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = date.getDate();
+    if (month == 0){
+        month = 12
+        year = year-1
+    }
+    return year + "-" + month + "-" + day +" 00:00:00";
 }
 
 
