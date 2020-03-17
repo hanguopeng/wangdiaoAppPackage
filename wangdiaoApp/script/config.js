@@ -39,6 +39,10 @@ var config= {
     GZ_checkWorksheetForArchive: localServer + "/dm/faultaccepting.do?method=checkArchiveAgain&type=android",              //  检查工单--归档专用
     GZ_checkWorksheetForForward: localServer + "/dm/dispatch.do?method=checkSingletree&type=android",              //  检查工单--转派追派专用
     GZ_getFlowDetails: localServer + "/dm/mobile.do?method=details&type=android",           //故障工单获取流转详情
+    // add by Mela.S 20200221 故障工单增加挂起申请批复页面
+    getSuspendApprovalModelUrl: localServer + "/dm/faultaccepting.do?method=hangReplyTZ&type=android",   //挂起申请批复获取挂起类型
+    saveSuspendApprovalUrl: localServer + "/dm/faultaccepting.do?method=hangReplyWorksheet&type=android",          //  挂起申请批复提交
+
     // 中台专用
     ZTWaitEndArchiveCount: localServer + "/dm/taskSchedulingCount.do?method=worksheetListTotal&type=android",   //待办/已办/归档数量
     ZTWaitWorksheetUrl: localServer + "/dm/taskScheduling.do?method=taskWaitWorksheetList&type=android",   //待办列表

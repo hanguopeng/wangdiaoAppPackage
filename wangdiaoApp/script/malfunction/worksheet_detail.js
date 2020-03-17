@@ -241,8 +241,10 @@ function initMenu() {
                     }else if(key==='挂起申请'){
                         data.imgUrl = 'guaqishenqing.png';
                         data.pageUrl = 'suspendApplication';
-                    }
-                    else if(key==='挂起审核'){
+                    }else if(key==='挂起申请批复'){
+                        data.imgUrl = 'guaqishenhe.png';
+                        data.pageUrl = 'suspendApproval';
+                    }else if(key==='挂起审核'){
                         data.imgUrl = 'guaqishenhe.png';
                         data.pageUrl = 'suspendAudit';
                     }
