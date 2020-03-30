@@ -320,13 +320,10 @@ function showOrClose(obj) {
 
 function computationTimeSubAMonth(){
     var date=new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = date.getDate();
-    if (month == 0){
-        month = 12
-        year = year-1
-    }
+    var newDate = new Date(date - 1000 * 60 * 60 * 24 * 30);//最后一个数字30可改，30天的意思
+    var year = newDate.getFullYear();
+    var month = newDate.getMonth()+1;
+    var day = newDate.getDate();
     return year + "-" + month + "-" + day +" 00:00:00";
 }
 
